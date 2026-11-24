@@ -22,7 +22,7 @@ Registro canónico de criterios verificables de apertura y cierre para las compu
   5. `pnpm typecheck`, `pnpm lint` (`0 errors, 0 warnings` con `.agents/**` excluido) y `pnpm build` finalizan con código `0`.
 
 ### `DF-GATE-01` — Fase 1: Base Técnica y Despliegue Cero
-- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-00 = APPROVED`, sin iniciar todavía)*
+- **Estado actual**: `IN_PROGRESS` *(Bloque 1A implementado en `feat/phase-1-foundation`; pendiente Bloque 1B: Preview URL en Vercel)*
 - **Criterio de apertura**: `DF-GATE-00 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. `next-intl` operativo con locales `es` y `en` y enrutamiento en `src/proxy.ts`.

@@ -4,8 +4,8 @@
 
 - **Proyecto**: `devfolio-core`
 - **Versión objetivo**: `v1.0` (Listo para postulaciones y despliegue en Vercel)
-- **Fase activa**: `Fase 0 — Entorno y Esqueleto (Cerrada: DF-GATE-00 APPROVED) → Fase 1 (READY_TO_START)`
-- **Rama actual**: `chore/phase-0-setup`
+- **Fase activa**: `Fase 1 — Base Técnica y Despliegue Cero (Bloque 1A — DF-GATE-01 IN_PROGRESS)`
+- **Rama actual**: `feat/phase-1-foundation`
 - **Stack bloqueado**: Next.js 16 (App Router) · React 19 · TypeScript estricto · Tailwind CSS v4 · shadcn/ui · `next-intl` · MDX · Zod · `pnpm` · Vercel
 
 ---
@@ -31,7 +31,7 @@ No se avanza de fase sin cumplir el criterio de cierre verificable de la fase ac
 | Fase | Estado | Objetivo | Criterio de cierre verificable |
 | :--- | :---: | :--- | :--- |
 | **Fase 0 — Entorno y Esqueleto** | **Completada (`DF-GATE-00 APPROVED`)** | Inicializar `devfolio-core`, estructura de carpetas, `docs/SCOPE.md`, reglas/skills en `.agents/` e ingesta de repos/skills externos seleccionados. | Árbol de carpetas completo, reglas y skills válidos, repos/skills curados registrados y `pnpm lint && pnpm build` en verde. |
-| **Fase 1 — Base Técnica y Despliegue Cero** | **Lista (`READY_TO_START`)** | Configurar `next-intl` (`es`/`en`), `src/proxy.ts`, tema claro/oscuro, shadcn/ui base, CI en GitHub Actions, `vercel.json` y primer deploy limpio a Vercel. | Preview URL de Vercel operativa cambiando `/es` ↔ `/en` y tema claro/oscuro sin errores de hidratación ni build. |
+| **Fase 1 — Base Técnica y Despliegue Cero** | **Activa (`IN_PROGRESS`)** | Configurar `next-intl` (`es`/`en`), `src/proxy.ts`, tema claro/oscuro, shadcn/ui base, CI en GitHub Actions, `vercel.json` y primer deploy limpio a Vercel. | Preview URL de Vercel operativa cambiando `/es` ↔ `/en` y tema claro/oscuro sin errores de hidratación ni build. |
 | **Fase 2 — Motor de Contenido** | Pendiente | Esquema Zod para proyectos MDX, lector tipado `src/lib/projects.ts`, validador de paridad ES/EN y datos tipados (`experience.ts`, `skills-matrix.ts`, `socials.ts`). | Carga validada de al menos 1 proyecto fixture en `es` y `en` + fallo explícito si falta un campo o idioma. |
 | **Fase 3 — Interfaz y Secciones** | Pendiente | Construir Navbar, LanguageSwitcher, ThemeToggle, Footer, Hero, FeaturedProjects, TechStack, Experience + CV, Contact, `/projects` con filtro y `/projects/[slug]`. | Revisión `/ui-audit` aprobada en móvil (375px) y escritorio (1440px), contraste WCAG AA y cero texto hardcodeado. |
 | **Fase 4 — Ingesta de Proyectos Reales** | Pendiente | Documentar 3 a 5 proyectos estrella mediante `/add-project` con casos de estudio ES/EN, capturas WebP/AVIF, demos y repositorios. | 3–5 proyectos reales publicados con paridad total ES/EN e imágenes optimizadas sin links rotos. |
