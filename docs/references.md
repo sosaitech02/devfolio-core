@@ -18,6 +18,8 @@ Registro trazable de todos los repositorios de GitHub, skills, librerías y refe
 | 2026-11-23 | `google-labs-code/stitch-skills` (`main` / `62fdcd6`) | Suite de Skills de IA (`SKILL.md` + `scripts/`/`resources/`/`examples/`) | **APROBADO (7 de 16 skills)** | `.agents/skills/{taste-design,design-md,enhance-prompt,generate-design,manage-design-system,shadcn-ui,react-components}/SKILL.md` | Instaladas 7 skills en nivel 1 (`02-web-platform-ui` y `03-frontend-architecture`). Excluidas 9 skills incompatibles o redundantes y descartado Buzzy MCP en v1.0 (`DF-D07`). |
 | 2026-11-23 | `vercel-labs/agent-skills` (`main` / `5a37a63`) | Suite de Skills de IA (`SKILL.md` + `references/`/`scripts/`/`rules/`) | **APROBADO (5 de 9 skills)** | `.agents/skills/{vercel-react-best-practices,vercel-composition-patterns,web-design-guidelines,vercel-react-view-transitions,deploy-to-vercel}/SKILL.md` | Instaladas 5 skills en nivel 1 (`02-web-platform-ui`, `03-frontend-architecture` y `05-qa-seo-deploy`). Excluidas `react-native-guidelines` (`vercel-react-native-skills`), `vercel-optimize` y `writing-guidelines` (`DF-D08`). |
 | 2026-11-23 | `anthropics/skills` (`main` / `e4bb5d9`) | Suite de Skills de IA (`SKILL.md` + `scripts/`/`references/`) | **APROBADO (3 de 20 skills)** | `.agents/skills/{skill-creator,webapp-testing,pdf}/SKILL.md` | Instaladas 3 skills complementarias sin solapamiento (`01-orchestration-governance`, `04-i18n-content`, `05-qa-seo-deploy`). Excluidas `docx`, `pptx`, `xlsx`, `frontend-design`, `mcp-builder` y las 12 skills restantes (`DF-D09`). |
+| 2026-11-24 | `emilkowalski/skills` (`main` / `64eb3de`) | Suite de Skills de IA (`SKILL.md` + `RECIPES.md`, MIT) | **APROBADO (4 de 20 skills · DF-D19)** | `.agents/skills/{emil-design-eng,animate,animation-performance,mobile-native}/SKILL.md` | Incorporación excepcional bajo `DF-D19` en rama `02-web-platform-ui` (cero scripts ejecutables; `Gen: Safe`, `Socket: 0 alerts`). Excluidas las 16 skills restantes; sin instalar paquetes npm en Fase 3C Bloque A. |
+| 2026-11-24 | `CloudAI-X/threejs-skills` (`main` / `0e18186`) | Suite de Skills de IA (`SKILL.md`, MIT) | **APROBADO (2 de 13 skills · DF-D19)** | `.agents/skills/{threejs-react-three-fiber,threejs-performance}/SKILL.md` | Incorporación excepcional bajo `DF-D19` acotada a evaluar una única pieza 3D arquitectónica condicional en el Hero (cero scripts ejecutables; `Gen: Safe`, `Socket: 0 alerts`, `Snyk: Low Risk`). Excluidas las 11 skills restantes; prohibidas escenas 3D adicionales en v1.0 y sin instalar paquetes npm en Bloque A. |
 
 ---
 
@@ -106,6 +108,42 @@ Registro trazable de todos los repositorios de GitHub, skills, librerías y refe
   - `pdf/scripts/`: utilidades opcionales en Python (`pypdf`, `pdfplumber`, `reportlab`, `pdf2image`) para inspección/manipulación de PDFs de CV cuando se requiera fuera del runtime de Next.js.
 - **Método de actualización**:
   - `npx skills add anthropics/skills --skill skill-creator webapp-testing pdf -y` (seguido de limpieza de `skills-lock.json`).
+
+### 5. `skills` (`emilkowalski/skills`) — Enmienda `DF-D19`
+- **URL del repositorio**: https://github.com/emilkowalski/skills
+- **Licencia**: `MIT`
+- **Rama / Commit de referencia**: `main` / `64eb3deb9a5fbfa041faf783e0bc3fd635872e9c` (`2026-11-15`)
+- **Rama oficial asignada**: `02-web-platform-ui` *(soporte de ergonomía móvil y rendimiento a `05-qa-seo-deploy`)*
+- **Rutas exactas instaladas en nivel 1 (4 skills)**:
+  1. `.agents/skills/emil-design-eng/SKILL.md`
+  2. `.agents/skills/animate/SKILL.md` *(incluye `RECIPES.md`)*
+  3. `.agents/skills/animation-performance/SKILL.md`
+  4. `.agents/skills/mobile-native/SKILL.md`
+- **Skills excluidas explícitamente (16 de 20)**:
+  - `animate-expo`, `animation-vocabulary`, `apple-design`, `ask-emil`, `ask-sonner`, `break-ui`, `choreograph`, `find-animation-opportunities`, `gestures`, `improve-animations`, `learn-taste`, `pick-ui-library`, `prototype`, `remove-animations`, `review-animations`, `write-swift`.
+- **Auditoría de seguridad y gobernanza (pre-instalación)**:
+  - `0` archivos ejecutables o scripts (`100%` documentación Markdown).
+  - Escaneo de riesgo reportado por el CLI: `Gen: Safe`, `Socket: 0 alerts` en las 4 skills (`Snyk: Low/Med Risk` sobre guías Markdown sin ejecución automática).
+  - Subordinación a gobernanza: aunque algunos ejemplos mencionan `motion/react`, `Vaul`, `Sonner` o `GSAP`, `devfolio-core` solo autoriza potencialmente `motion/react` a partir de Bloque B (`DF-D19`) y mantiene prohibida cualquier librería adicional no aprobada.
+- **Método de actualización**:
+  - `npx skills add emilkowalski/skills --skill emil-design-eng animate animation-performance mobile-native --agent antigravity --copy -y` (seguido de limpieza de `skills-lock.json`).
+
+### 6. `threejs-skills` (`CloudAI-X/threejs-skills`) — Enmienda `DF-D19`
+- **URL del repositorio**: https://github.com/CloudAI-X/threejs-skills
+- **Licencia**: `MIT`
+- **Rama / Commit de referencia**: `main` / `0e181866f095b5f06d005133876e926515390d95` (`2026-10-19`)
+- **Rama oficial asignada**: `02-web-platform-ui` *(soporte técnico a `03-frontend-architecture` y `05-qa-seo-deploy`)*
+- **Rutas exactas instaladas en nivel 1 (2 skills)**:
+  1. `.agents/skills/threejs-react-three-fiber/SKILL.md`
+  2. `.agents/skills/threejs-performance/SKILL.md`
+- **Skills excluidas explícitamente (11 de 13)**:
+  - `threejs-animation`, `threejs-asset-pipeline`, `threejs-fundamentals`, `threejs-geometry`, `threejs-interaction`, `threejs-lighting`, `threejs-loaders`, `threejs-materials`, `threejs-postprocessing` *(coherente con prohibición de postprocesamiento costoso en `DF-D19`)*, `threejs-shaders`, `threejs-textures`.
+- **Auditoría de seguridad y gobernanza (pre-instalación)**:
+  - `0` archivos ejecutables o scripts (`100%` documentación Markdown).
+  - Escaneo de riesgo reportado por el CLI: `Gen: Safe`, `Socket: 0 alerts`, `Snyk: Low Risk` en ambas skills.
+  - Subordinación a gobernanza (`DF-D19`): restringidas exclusivamente a evaluar e implementar —solo si el Bloque B demuestra utilidad visual y viabilidad técnica— una **única** pieza 3D arquitectónica en el Hero (`< 10.000` triángulos, presupuesto explícito de draw calls y memoria GPU, DPR adaptativo, lazy load, pausa fuera de vista/pestaña oculta, fallback SVG/CSS funcional, `prefers-reduced-motion`, sin bloquear scroll/touch y sin postprocesamiento costoso). Prohibidas escenas 3D adicionales en v1.0.
+- **Método de actualización**:
+  - `npx skills add CloudAI-X/threejs-skills --skill threejs-react-three-fiber threejs-performance --agent antigravity --copy -y` (seguido de limpieza de `skills-lock.json`).
 
 ---
 

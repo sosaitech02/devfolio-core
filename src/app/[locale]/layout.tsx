@@ -109,7 +109,10 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider defaultTheme="system">
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <a href="#main-content" className="skip-link">
+            <a
+              href="#main-content"
+              className="skip-link sr-only focus:not-sr-only focus-visible:not-sr-only"
+            >
               {tNav("skipToMain")}
             </a>
             <Navbar locale={locale} />

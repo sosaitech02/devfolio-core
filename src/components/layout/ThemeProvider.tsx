@@ -75,22 +75,28 @@ function readStoredTheme(defaultTheme: Theme): Theme {
   return defaultTheme;
 }
 
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 function applyDocumentTheme(theme: Theme) {
   if (typeof document === "undefined") {
     return;
   }
   const root = document.documentElement;
   if (theme === "system") {
-    delete root.dataset.theme;
-  } else {
+    if ("theme" in root.dataset) {
+      delete root.dataset.theme;
+    }
+  } else if (root.dataset.theme !== theme) {
     root.dataset.theme = theme;
   }
 
   const meta = document.querySelector<HTMLMetaElement>(
     'meta[name="color-scheme"]'
   );
-  if (meta) {
-    meta.content = theme === "system" ? "light dark" : theme;
+  const expectedColorScheme = theme === "system" ? "light dark" : theme;
+  if (meta && meta.content !== expectedColorScheme) {
+    meta.content = expectedColorScheme;
   }
 }
 
@@ -118,9 +124,13 @@ export function ThemeProvider({
   const resolvedTheme: ResolvedTheme =
     theme === "system" ? systemTheme : theme;
 
-  React.useEffect(() => {
+  // Sync data-theme synchronously in React's commit phase before browser paint.
+  // When [locale] switches (/en <-> /es), Next.js reconciles <html lang={locale}>
+  // without data-theme; running in useLayoutEffect restores data-theme in the same
+  // commit tick so zero opposite-theme frames are ever painted.
+  useIsomorphicLayoutEffect(() => {
     applyDocumentTheme(theme);
-  }, [theme]);
+  });
 
   const setTheme = React.useCallback((nextTheme: Theme) => {
     try {

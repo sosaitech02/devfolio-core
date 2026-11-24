@@ -39,10 +39,10 @@ export function LanguageSwitcher() {
             aria-pressed={isActive}
             onClick={() => handleSelectLocale(targetLocale)}
             className={cn(
-              "min-h-8 min-w-8 rounded-md px-2.5 font-mono text-xs font-semibold transition-colors disabled:opacity-60",
+              "min-h-8 min-w-8 rounded-md px-2.5 font-mono text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-60",
               isActive
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                ? "bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active"
+                : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground active:bg-surface-subtle"
             )}
           >
             {t(targetLocale)}
