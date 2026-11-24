@@ -22,16 +22,16 @@ Registro canónico de criterios verificables de apertura y cierre para las compu
   5. `pnpm typecheck`, `pnpm lint` (`0 errors, 0 warnings` con `.agents/**` excluido) y `pnpm build` finalizan con código `0`.
 
 ### `DF-GATE-01` — Fase 1: Base Técnica y Despliegue Cero
-- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-00 = APPROVED`, sin iniciar todavía)*
+- **Estado actual**: `APPROVED` (`2026-11-24`, `DF-D13` — Vercel URL verificada: `https://devfolio-core.vercel.app/`, Vercel Build: `READY`, GitHub Actions CI: `PASS`)
 - **Criterio de apertura**: `DF-GATE-00 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. `next-intl` operativo con locales `es` y `en` y enrutamiento en `src/proxy.ts`.
-  2. Tema claro/oscuro sin errores de hidratación y base `shadcn/ui` instalada en `src/components/ui/`.
-  3. CI en `.github/workflows/ci.yml` y cabeceras/caché en `vercel.json`.
-  4. Preview URL activa en Vercel validando `/es` ↔ `/en`, modo claro/oscuro y `pnpm typecheck && pnpm lint && pnpm build` en verde.
+  2. Tema claro/oscuro CSS-first sin errores de hidratación ni consola y base `shadcn/ui` instalada en `src/components/ui/`.
+  3. CI en `.github/workflows/ci.yml` (`PASS`) y cabeceras/caché en `vercel.json`.
+  4. Despliegue activo en Vercel (`https://devfolio-core.vercel.app/`, estado `READY`) validado en PC y móvil (`/es` ↔ `/en`, tema claro/oscuro, 404 localizado, `robots.txt`, `sitemap.xml`) y `pnpm typecheck && pnpm lint --max-warnings=0 && pnpm build` en verde.
 
 ### `DF-GATE-02` — Fase 2: Motor de Contenido
-- **Estado actual**: `LOCKED`
+- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-01 = APPROVED`, sin iniciar todavía)*
 - **Criterio de apertura**: `DF-GATE-01 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. Esquema Zod estricto para frontmatter MDX y lector `src/lib/projects.ts` con fallo explícito ante campos faltantes o asimetría ES/EN.

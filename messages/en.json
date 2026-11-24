@@ -1,0 +1,39 @@
+{
+  "Metadata": {
+    "siteName": "devfolio-core",
+    "title": "devfolio-core — Software Engineering Portfolio",
+    "description": "Bilingual technical portfolio built with Next.js 16, strict TypeScript, Tailwind CSS v4, shadcn/ui, and next-intl."
+  },
+  "LocaleSwitcher": {
+    "label": "Switch language",
+    "es": "ES",
+    "en": "EN",
+    "switchToEs": "Switch language to Spanish",
+    "switchToEn": "Switch language to English"
+  },
+  "ThemeToggle": {
+    "label": "Toggle light or dark theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Phase1Skeleton": {
+    "badge": "Phase 1 — Technical Foundation",
+    "phaseTag": "DF-GATE-01 IN PROGRESS",
+    "title": "Technical foundation ready for zero-config Vercel deployment",
+    "description": "Bilingual routing (/es and /en) with next-intl, Tailwind CSS v4 design tokens, accessible shadcn/ui primitives, and flicker-free light/dark theme support.",
+    "statusLabel": "Pipeline status",
+    "statusValue": "Operational (Next.js 16.4.6 + App Router)",
+    "localeLabel": "Active locale",
+    "themeLabel": "Visual theme",
+    "stackLabel": "Verified layers",
+    "primaryAction": "Explore projects (Phase 3)",
+    "secondaryAction": "View governance state"
+  },
+  "NotFound": {
+    "badge": "404 Error",
+    "title": "Page not found",
+    "description": "The requested route does not exist or has been moved.",
+    "backHome": "Back to home"
+  }
+}

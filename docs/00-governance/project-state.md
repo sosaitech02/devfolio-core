@@ -3,9 +3,9 @@
 > **Punto de lectura obligatorio** antes de explorar carpetas o iniciar cualquier tarea. Mantenido por `project-workflow-governor`.
 
 - **Proyecto**: `devfolio-core` (v1.0)
-- **Rama activa**: `chore/phase-0-setup`
-- **Fase activa**: `Fase 0 — Entorno y Esqueleto (Cerrada) → Fase 1 lista para iniciar`
-- **Estado operativo actual**: `DF_GATE_00_APPROVED`
+- **Rama activa**: `feat/phase-1-foundation`
+- **Fase activa**: `Fase 1 — Base Técnica y Despliegue Cero (Cerrada) → Fase 2 lista para iniciar`
+- **Estado operativo actual**: `DF_GATE_01_APPROVED`
 - **Última actualización**: `2026-11-24`
 
 ---
@@ -33,8 +33,8 @@
 | Compuerta | Fase asociada | Estado | Evidencia / Bloqueo actual |
 | :--- | :--- | :---: | :--- |
 | **DF-GATE-00** | Fase 0 — Entorno y Esqueleto | `APPROVED` | Esqueleto Next.js 16.4.6, gobernanza endurecida, `.agents/**` excluido en ESLint/TS, `26` skills en nivel 1 (`10` internas + `16` externas curadas congeladas para v1.0) y `typecheck`/`lint`/`build` con `0 errors, 0 warnings` (`DF-D10`). |
-| **DF-GATE-01** | Fase 1 — Base Técnica y Despliegue Cero | `READY_TO_START` | Desbloqueada tras `DF-GATE-00 = APPROVED` (pendiente de iniciar implementación técnica de Fase 1). |
-| **DF-GATE-02** | Fase 2 — Motor de Contenido | `LOCKED` | Bloqueada hasta que `DF-GATE-01` sea `APPROVED`. |
+| **DF-GATE-01** | Fase 1 — Base Técnica y Despliegue Cero | `APPROVED` | Bloque 1A + 1B verificados (`next-intl`, `src/proxy.ts`, `shadcn/ui`, tema CSS-first con `0` console errors, `vercel.json`, `.github/workflows/ci.yml` `PASS`, despliegue Vercel `READY` en `https://devfolio-core.vercel.app/` validado en PC y móvil, `DF-D13`). |
+| **DF-GATE-02** | Fase 2 — Motor de Contenido | `READY_TO_START` | Desbloqueada tras `DF-GATE-01 = APPROVED` (pendiente de iniciar implementación técnica de Fase 2). |
 | **DF-GATE-03** | Fase 3 — Interfaz y Secciones | `LOCKED` | Bloqueada hasta que `DF-GATE-02` sea `APPROVED`. |
 | **DF-GATE-04** | Fase 4 — Ingesta de Proyectos Reales | `LOCKED` | Bloqueada hasta que `DF-GATE-03` sea `APPROVED`. |
 | **DF-GATE-05** | Fase 5 — Auditoría QA, SEO y Lanzamiento | `LOCKED` | Bloqueada hasta que `DF-GATE-04` sea `APPROVED`. |

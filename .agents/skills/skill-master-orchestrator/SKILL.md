@@ -29,19 +29,19 @@ Orquestador maestro del repositorio `devfolio-core`. Coordina la ejecución téc
 El orquestador distingue con precisión quirúrgica entre lo que **ya está instalado en `package.json`** y las capas **planificadas para fases posteriores** (prohibido asumirlas como instaladas mientras su compuerta esté `LOCKED`):
 
 ### 1.1 Estado real del Stack por Fase
-- **Stack Base Instalado en Fase 0 (Verificado en `package.json`)**:
-  - **Next.js `16.4.6`** (App Router, Turbopack, `cacheComponents: true`, `partialPrefetching: true`)
+- **Capas Instaladas y Verificadas (Fase 0 + Fase 1 — `DF-GATE-00` y `DF-GATE-01` `APPROVED`)**:
+  - **Next.js `16.4.6`** (App Router, Turbopack, `cacheComponents: true`, `partialPrefetching: true`, convención oficial `src/proxy.ts`)
   - **React `19.3.0`** y **React DOM `19.3.0`**
   - **TypeScript `5.9.3`** (`strict: true`, alias `@/*` → `./src/*`)
   - **Tailwind CSS `4.3.3`** (`@tailwindcss/turbopack` `4.3.3`)
-  - **ESLint `9.39.5`** (`eslint-config-next` `16.4.6`)
+  - **ESLint `9.39.5`** (`eslint-config-next` `16.4.6`, `.agents/**` excluido)
   - **Gestor de paquetes**: `pnpm` `12.23.0`
-- **Capas Planificadas para Fase 1 (`DF-GATE-01` — No instaladas aún)**:
-  - `next-intl` (enrutamiento `/[locale]` para `es` y `en` + `src/proxy.ts`)
-  - `shadcn/ui` (primitivos accesibles en `src/components/ui/`)
-  - `lucide-react` (iconografía ligera con tree-shaking)
-  - Pipeline y despliegue base en **Vercel** (`vercel.json`, `.github/workflows/ci.yml`)
-- **Capas Planificadas para Fase 2 (`DF-GATE-02` — No instaladas aún)**:
+  - **`next-intl` `4.15.3`** (`locales: ['es', 'en']`, `defaultLocale: 'es'`, `localePrefix: 'always'`, `src/i18n/{routing,request,navigation}.ts`, `src/proxy.ts`, `messages/{es,en}.json`)
+  - **`shadcn/ui` base** (`components.json`, `src/lib/utils.ts`, primitivos `button` y `badge` en `src/components/ui/`, `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`)
+  - **`lucide-react` `1.78.0`** (iconografía ligera con tree-shaking)
+  - **`ThemeProvider` nativo CSS-first** (`prefers-color-scheme` + `data-theme` en `src/styles/globals.css`, `useSyncExternalStore`, `0` etiquetas `<script>`/`<Script>` en `src/`)
+  - **Infraestructura CI y Vercel**: `.github/workflows/ci.yml` (`PASS`), `vercel.json` y despliegue verificado en `https://devfolio-core.vercel.app/` (`READY`)
+- **Capas Planificadas para Fase 2 (`DF-GATE-02` — `READY_TO_START`, No instaladas aún)**:
   - **`MDX`** (procesamiento de casos de estudio bilingües en `content/projects/{es,en}/*.mdx`)
   - **`Zod`** (esquemas de validación estricta en `src/lib/projects.ts` y datos tipados en `content/data/*.ts`)
 
