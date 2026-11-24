@@ -35,5 +35,23 @@
     "title": "Página no encontrada",
     "description": "La ruta solicitada no existe o fue movida.",
     "backHome": "Volver al inicio"
+  },
+  "ProjectsStub": {
+    "metaTitle": "Proyectos",
+    "metaDescription": "Catálogo técnico de proyectos validados con MDX y Zod en devfolio-core.",
+    "badge": "Fase 2 — Motor de Contenido",
+    "heading": "Catálogo de proyectos (Stub MDX)",
+    "subheading": "Vista técnica mínima para validar la carga estática de proyectos MDX y etiquetas de tecnología.",
+    "tagsLabel": "Tecnologías detectadas",
+    "backHome": "Volver al inicio",
+    "backToProjects": "Volver a proyectos",
+    "viewCaseStudy": "Ver caso de estudio",
+    "repositoryLink": "Repositorio",
+    "demoLink": "Demo en vivo",
+    "roleLabel": "Rol",
+    "dateLabel": "Fecha",
+    "statusLabel": "Estado",
+    "problemLabel": "Problema resuelto",
+    "emptyState": "No hay proyectos publicados todavía."
   }
 }

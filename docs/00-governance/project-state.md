@@ -3,9 +3,9 @@
 > **Punto de lectura obligatorio** antes de explorar carpetas o iniciar cualquier tarea. Mantenido por `project-workflow-governor`.
 
 - **Proyecto**: `devfolio-core` (v1.0)
-- **Rama activa**: `feat/phase-1-foundation`
-- **Fase activa**: `Fase 1 — Base Técnica y Despliegue Cero (Cerrada) → Fase 2 lista para iniciar`
-- **Estado operativo actual**: `DF_GATE_01_APPROVED`
+- **Rama activa**: `feat/phase-2-content-engine`
+- **Fase activa**: `Fase 2 — Motor de Contenido (Cerrada · DF-GATE-02 APPROVED; DF-GATE-03 READY_TO_START)`
+- **Estado operativo actual**: `DF_GATE_02_APPROVED`
 - **Última actualización**: `2026-11-24`
 
 ---
@@ -34,7 +34,7 @@
 | :--- | :--- | :---: | :--- |
 | **DF-GATE-00** | Fase 0 — Entorno y Esqueleto | `APPROVED` | Esqueleto Next.js 16.4.6, gobernanza endurecida, `.agents/**` excluido en ESLint/TS, `26` skills en nivel 1 (`10` internas + `16` externas curadas congeladas para v1.0) y `typecheck`/`lint`/`build` con `0 errors, 0 warnings` (`DF-D10`). |
 | **DF-GATE-01** | Fase 1 — Base Técnica y Despliegue Cero | `APPROVED` | Bloque 1A + 1B verificados (`next-intl`, `src/proxy.ts`, `shadcn/ui`, tema CSS-first con `0` console errors, `vercel.json`, `.github/workflows/ci.yml` `PASS`, despliegue Vercel `READY` en `https://devfolio-core.vercel.app/` validado en PC y móvil, `DF-D13`). |
-| **DF-GATE-02** | Fase 2 — Motor de Contenido | `READY_TO_START` | Desbloqueada tras `DF-GATE-01 = APPROVED` (pendiente de iniciar implementación técnica de Fase 2). |
-| **DF-GATE-03** | Fase 3 — Interfaz y Secciones | `LOCKED` | Bloqueada hasta que `DF-GATE-02` sea `APPROVED`. |
+| **DF-GATE-02** | Fase 2 — Motor de Contenido | `APPROVED` | Motor MDX + Zod (`src/lib/{content-schemas,projects,mdx}.ts`), datos reales bilingües del CV 2026 en `content/data/{socials,skills-matrix,experience}.ts` (`isPlaceholder: false`, sin teléfono personal), fixture `sample-architecture.mdx`, `scripts/validate-content.mjs` en CI, `sitemap.ts` dinámico, rutas estáticas `/[locale]/projects` y `/[locale]/projects/[slug]` y `validate:content`/`typecheck`/`lint --max-warnings=0`/`build` en verde (`DF-D14`, `DF-D15`). |
+| **DF-GATE-03** | Fase 3 — Interfaz y Secciones | `READY_TO_START` | Desbloqueada tras `DF-GATE-02 = APPROVED` (`DF-D15`). Lista para iniciar diseño/UI en Fase 3 con paleta Cobalt `#233A8E` / Cyan `#1DA4DF` (identidad tipográfica sin logo gráfico). |
 | **DF-GATE-04** | Fase 4 — Ingesta de Proyectos Reales | `LOCKED` | Bloqueada hasta que `DF-GATE-03` sea `APPROVED`. |
 | **DF-GATE-05** | Fase 5 — Auditoría QA, SEO y Lanzamiento | `LOCKED` | Bloqueada hasta que `DF-GATE-04` sea `APPROVED`. |
