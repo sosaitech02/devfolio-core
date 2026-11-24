@@ -15,7 +15,7 @@ const verifiedStack = [
   "Tailwind CSS v4",
   "shadcn/ui",
   "next-intl",
-  "next-themes",
+  "Native Theme",
 ] as const;
 
 export default async function LocaleHomePage({
