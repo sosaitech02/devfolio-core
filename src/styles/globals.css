@@ -69,6 +69,9 @@
 
   /* Geometry & Motion Timing */
   --radius: 0.5rem;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --duration-exit: 150ms;
   --duration-enter: 210ms;
   --duration-move: 320ms;
@@ -294,6 +297,13 @@
   textarea,
   select {
     touch-action: manipulation;
+  }
+
+  button,
+  [role="button"] {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
 
   :where(a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
@@ -602,12 +612,32 @@ dialog.mobile-nav-dialog::backdrop {
 }
 
 /* ==========================================================================
-   Coarse Pointer Ergonomics (Touch Targets >= 44px)
+   Coarse Pointer Ergonomics (Touch Targets >= 44px & iOS Input Zoom Guard)
    ========================================================================== */
 
 @media (pointer: coarse) {
   .touch-target {
     min-block-size: 44px;
     min-inline-size: 44px;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Fine-Pointer Directional Arrow Micro-Shift (No Sticky Hover on Touch)
+   ========================================================================== */
+
+.cta-arrow {
+  transition: transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cta-arrow-group:hover .cta-arrow {
+    transform: translateX(3px);
   }
 }

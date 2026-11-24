@@ -8,6 +8,7 @@ import {
   ProjectCard,
   type ProjectCardLabels,
 } from "@/components/projects/ProjectCard";
+import { ProjectCardMotion } from "@/components/projects/ProjectCardMotion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ProjectMeta } from "@/lib/projects";
@@ -149,7 +150,7 @@ export function ProjectsCatalogClient({
         >
           {filteredProjects.map((project, index) => (
             <ViewTransition key={project.slug}>
-              <div className="h-full">
+              <ProjectCardMotion>
                 <ProjectCard
                   project={project}
                   labels={cardLabels}
@@ -159,7 +160,7 @@ export function ProjectsCatalogClient({
                       : "standard"
                   }
                 />
-              </div>
+              </ProjectCardMotion>
             </ViewTransition>
           ))}
         </div>
