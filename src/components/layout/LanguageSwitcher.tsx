@@ -1,11 +1,10 @@
 "use client";
 
 import { useTransition } from "react";
-import { Languages } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { cn } from "@/lib/utils";
 
 export function LanguageSwitcher() {
   const t = useTranslations("LocaleSwitcher");
@@ -25,27 +24,29 @@ export function LanguageSwitcher() {
     <div
       role="group"
       aria-label={t("label")}
-      className="inline-flex items-center gap-1 rounded-md border border-border bg-card p-0.5"
+      className="inline-flex items-center rounded-lg border border-border bg-card p-0.5"
     >
-      <Languages className="ml-1.5 size-3.5 text-muted-foreground" aria-hidden="true" />
       {routing.locales.map((targetLocale) => {
         const isActive = locale === targetLocale;
         const ariaLabel =
           targetLocale === "es" ? t("switchToEs") : t("switchToEn");
         return (
-          <Button
+          <button
             key={targetLocale}
             type="button"
-            variant={isActive ? "default" : "ghost"}
-            size="sm"
             disabled={isPending}
             aria-label={ariaLabel}
             aria-pressed={isActive}
             onClick={() => handleSelectLocale(targetLocale)}
-            className="h-7 px-2.5 text-xs font-semibold"
+            className={cn(
+              "min-h-8 min-w-8 rounded-md px-2.5 font-mono text-xs font-semibold transition-colors disabled:opacity-60",
+              isActive
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+            )}
           >
             {t(targetLocale)}
-          </Button>
+          </button>
         );
       })}
     </div>

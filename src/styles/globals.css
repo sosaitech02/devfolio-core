@@ -11,99 +11,188 @@
   }
 }
 
+/* ==========================================================================
+   DevFolio Core V1 — Semantic Design Tokens (WCAG 2.2 AA Verified)
+   Source of truth: .stitch/DESIGN.md & .agents/rules/design-system.md
+   CSS-first architecture: zero inline scripts, respects prefers-color-scheme
+   ========================================================================== */
+
 :root {
   color-scheme: light dark;
-  --background: #fafafa;
-  --foreground: #09090b;
+
+  /* Light Mode (Default when OS prefers light or data-theme="light") */
+  --background: #f8fafc;
+  --foreground: #0b1220;
   --card: #ffffff;
-  --card-foreground: #09090b;
+  --card-foreground: #0b1220;
+  --surface-elevated: #f1f5f9;
+  --surface-subtle: #e2e8f0;
   --popover: #ffffff;
-  --popover-foreground: #09090b;
-  --primary: #18181b;
-  --primary-foreground: #fafafa;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #18181b;
-  --muted: #f4f4f5;
-  --muted-foreground: #52525b;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
-  --destructive: #dc2626;
-  --destructive-foreground: #fafafa;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #18181b;
-  --radius: 0.625rem;
+  --popover-foreground: #0b1220;
+
+  /* Brand & Interactive */
+  --primary: #233a8e;
+  --primary-hover: #1b2e73;
+  --primary-foreground: #ffffff;
+  --primary-brand-deep: #233a8e;
+  --primary-link: #233a8e;
+
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0b1220;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --subtle-foreground: #526075;
+
+  /* Cyan Accent — calibrated #0369A1 for >= 4.5:1 text/UI on light surfaces */
+  --accent: #e0f4fc;
+  --accent-foreground: #0369a1;
+  --accent-decorative: #1da4df;
+  --accent-ink: #0b1220;
+
+  /* Borders, Inputs & Focus */
+  --border: #e2e8f0;
+  --input: #64748b;
+  --ring: #233a8e;
+
+  /* Status Tokens (Always paired with icon + text) */
+  --status-success: #047857;
+  --status-success-bg: #ecfdf5;
+  --status-warning: #b45309;
+  --status-warning-bg: #fffbeb;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --destructive-bg: #fef2f2;
+
+  /* Geometry & Motion Timing */
+  --radius: 0.5rem;
+  --duration-exit: 150ms;
+  --duration-enter: 210ms;
+  --duration-move: 320ms;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --background: #09090b;
-    --foreground: #fafafa;
-    --card: #121215;
-    --card-foreground: #fafafa;
-    --popover: #121215;
-    --popover-foreground: #fafafa;
-    --primary: #fafafa;
-    --primary-foreground: #09090b;
-    --secondary: #1c1c21;
-    --secondary-foreground: #fafafa;
-    --muted: #1c1c21;
-    --muted-foreground: #a1a1aa;
-    --accent: #27272a;
-    --accent-foreground: #fafafa;
-    --destructive: #ef4444;
-    --destructive-foreground: #fafafa;
-    --border: #27272a;
-    --input: #27272a;
-    --ring: #d4d4d8;
+    --background: #070b14;
+    --foreground: #f1f5f9;
+    --card: #0d1424;
+    --card-foreground: #f1f5f9;
+    --surface-elevated: #131d33;
+    --surface-subtle: #1a2742;
+    --popover: #0d1424;
+    --popover-foreground: #f1f5f9;
+
+    --primary: #3b63d6;
+    --primary-hover: #4c74e8;
+    --primary-foreground: #f8fafc;
+    --primary-brand-deep: #233a8e;
+    --primary-link: #7ba3ff;
+
+    --secondary: #131d33;
+    --secondary-foreground: #f1f5f9;
+    --muted: #131d33;
+    --muted-foreground: #94a3b8;
+    --subtle-foreground: #8899b4;
+
+    --accent: #0f2940;
+    --accent-foreground: #38bdf8;
+    --accent-decorative: #1da4df;
+    --accent-ink: #070b14;
+
+    --border: #1e293b;
+    --input: #5a6d8c;
+    --ring: #38bdf8;
+
+    --status-success: #34d399;
+    --status-success-bg: #052e23;
+    --status-warning: #fbbf24;
+    --status-warning-bg: #3b1f05;
+    --destructive: #f87171;
+    --destructive-foreground: #070b14;
+    --destructive-bg: #3b0d14;
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #09090b;
-  --foreground: #fafafa;
-  --card: #121215;
-  --card-foreground: #fafafa;
-  --popover: #121215;
-  --popover-foreground: #fafafa;
-  --primary: #fafafa;
-  --primary-foreground: #09090b;
-  --secondary: #1c1c21;
-  --secondary-foreground: #fafafa;
-  --muted: #1c1c21;
-  --muted-foreground: #a1a1aa;
-  --accent: #27272a;
-  --accent-foreground: #fafafa;
-  --destructive: #ef4444;
-  --destructive-foreground: #fafafa;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #d4d4d8;
+  --background: #070b14;
+  --foreground: #f1f5f9;
+  --card: #0d1424;
+  --card-foreground: #f1f5f9;
+  --surface-elevated: #131d33;
+  --surface-subtle: #1a2742;
+  --popover: #0d1424;
+  --popover-foreground: #f1f5f9;
+
+  --primary: #3b63d6;
+  --primary-hover: #4c74e8;
+  --primary-foreground: #f8fafc;
+  --primary-brand-deep: #233a8e;
+  --primary-link: #7ba3ff;
+
+  --secondary: #131d33;
+  --secondary-foreground: #f1f5f9;
+  --muted: #131d33;
+  --muted-foreground: #94a3b8;
+  --subtle-foreground: #8899b4;
+
+  --accent: #0f2940;
+  --accent-foreground: #38bdf8;
+  --accent-decorative: #1da4df;
+  --accent-ink: #070b14;
+
+  --border: #1e293b;
+  --input: #5a6d8c;
+  --ring: #38bdf8;
+
+  --status-success: #34d399;
+  --status-success-bg: #052e23;
+  --status-warning: #fbbf24;
+  --status-warning-bg: #3b1f05;
+  --destructive: #f87171;
+  --destructive-foreground: #070b14;
+  --destructive-bg: #3b0d14;
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --background: #fafafa;
-  --foreground: #09090b;
+  --background: #f8fafc;
+  --foreground: #0b1220;
   --card: #ffffff;
-  --card-foreground: #09090b;
+  --card-foreground: #0b1220;
+  --surface-elevated: #f1f5f9;
+  --surface-subtle: #e2e8f0;
   --popover: #ffffff;
-  --popover-foreground: #09090b;
-  --primary: #18181b;
-  --primary-foreground: #fafafa;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #18181b;
-  --muted: #f4f4f5;
-  --muted-foreground: #52525b;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
-  --destructive: #dc2626;
-  --destructive-foreground: #fafafa;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #18181b;
+  --popover-foreground: #0b1220;
+
+  --primary: #233a8e;
+  --primary-hover: #1b2e73;
+  --primary-foreground: #ffffff;
+  --primary-brand-deep: #233a8e;
+  --primary-link: #233a8e;
+
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0b1220;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --subtle-foreground: #526075;
+
+  --accent: #e0f4fc;
+  --accent-foreground: #0369a1;
+  --accent-decorative: #1da4df;
+  --accent-ink: #0b1220;
+
+  --border: #e2e8f0;
+  --input: #64748b;
+  --ring: #233a8e;
+
+  --status-success: #047857;
+  --status-success-bg: #ecfdf5;
+  --status-warning: #b45309;
+  --status-warning-bg: #fffbeb;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --destructive-bg: #fef2f2;
 }
 
 @theme inline {
@@ -111,30 +200,54 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-subtle: var(--surface-subtle);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-brand-deep: var(--primary-brand-deep);
+  --color-primary-link: var(--primary-link);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-decorative: var(--accent-decorative);
+  --color-accent-ink: var(--accent-ink);
+  --color-status-success: var(--status-success);
+  --color-status-success-bg: var(--status-success-bg);
+  --color-status-warning: var(--status-warning);
+  --color-status-warning-bg: var(--status-warning-bg);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-bg: var(--destructive-bg);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
 }
 
 @layer base {
+  html {
+    scroll-behavior: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   * {
     border-color: var(--border);
   }
@@ -143,5 +256,330 @@
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  section[id],
+  h2[id],
+  h3[id],
+  main[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    touch-action: manipulation;
+  }
+
+  :where(a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+}
+
+/* ==========================================================================
+   Fluid Typography Utilities (clamp() with max <= 2.5 * min for WCAG 1.4.4)
+   ========================================================================== */
+
+.text-fluid-hero {
+  font-size: clamp(2.125rem, 1.45rem + 2.3vw, 3.625rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.text-fluid-section {
+  font-size: clamp(1.5rem, 1.2rem + 1.15vw, 2.25rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+
+.text-fluid-card {
+  font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.section-py {
+  padding-block: clamp(3.5rem, 6vw, 5.75rem);
+}
+
+/* ==========================================================================
+   Accessible Skip Link & Visually Hidden Utility
+   ========================================================================== */
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: var(--radius);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Accessible Form Validation (:user-invalid synced with aria-invalid)
+   ========================================================================== */
+
+.field-control:is(:user-invalid, [aria-invalid="true"]) {
+  border-color: var(--destructive);
+}
+
+.field-error {
+  display: none;
+}
+
+.field-control:is(:user-invalid, [aria-invalid="true"]) ~ .field-error {
+  display: flex;
+}
+
+/* ==========================================================================
+   Native Modal Drawer (<dialog>) Styling & Animation
+   ========================================================================== */
+
+dialog.mobile-nav-dialog {
+  margin: 0 0 0 auto;
+  padding: 0;
+  width: min(21rem, 86dvw);
+  max-width: 100dvw;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  border-left: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--card-foreground);
+  overscroll-behavior: contain;
+}
+
+dialog.mobile-nav-dialog::backdrop {
+  background-color: rgba(7, 11, 20, 0.72);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.mobile-nav-dialog {
+    opacity: 0;
+    transform: translateX(100%);
+    transition:
+      opacity 180ms ease-out,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      overlay 220ms allow-discrete,
+      display 220ms allow-discrete;
+  }
+
+  dialog.mobile-nav-dialog[open] {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @starting-style {
+    dialog.mobile-nav-dialog[open] {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* ==========================================================================
+   Progressive Rendering & Skeleton UI (CLS = 0, Reduced Motion Safe)
+   ========================================================================== */
+
+.defer-section {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 42rem;
+}
+
+.skeleton-shimmer {
+  background-color: var(--surface-elevated);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton-shimmer {
+    background-image: linear-gradient(
+      90deg,
+      var(--surface-elevated) 0%,
+      var(--surface-subtle) 50%,
+      var(--surface-elevated) 100%
+    );
+    background-size: 200% 100%;
+    animation: df-shimmer 1.8s ease-in-out infinite;
+  }
+
+  @keyframes df-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   React 19 + Next.js 16 Native View Transitions Recipes
+   ========================================================================== */
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+@keyframes df-vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes df-vt-slide {
+  from {
+    translate: var(--slide-offset);
+  }
+  to {
+    translate: 0;
+  }
+}
+
+@keyframes df-vt-slide-y {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+::view-transition-group(.morph) {
+  animation-duration: var(--duration-move);
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-group(.text-morph) {
+  animation-duration: var(--duration-move);
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(.text-morph) {
+  display: none;
+}
+
+::view-transition-new(.text-morph) {
+  animation: none;
+  object-fit: none;
+  object-position: left top;
+}
+
+::view-transition-old(.slide-down) {
+  animation:
+    var(--duration-exit) ease-out both df-vt-fade reverse,
+    var(--duration-exit) ease-out both df-vt-slide-y reverse;
+}
+
+::view-transition-new(.slide-up) {
+  animation:
+    var(--duration-enter) ease-in var(--duration-exit) both df-vt-fade,
+    var(--duration-move) ease-out both df-vt-slide-y;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -36px;
+  animation:
+    var(--duration-exit) ease-in both df-vt-fade reverse,
+    var(--duration-move) cubic-bezier(0.22, 1, 0.36, 1) both df-vt-slide reverse;
+}
+
+::view-transition-new(.nav-forward) {
+  --slide-offset: 36px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both df-vt-fade,
+    var(--duration-move) cubic-bezier(0.22, 1, 0.36, 1) both df-vt-slide;
+}
+
+::view-transition-old(.nav-back) {
+  --slide-offset: 36px;
+  animation:
+    var(--duration-exit) ease-in both df-vt-fade reverse,
+    var(--duration-move) cubic-bezier(0.22, 1, 0.36, 1) both df-vt-slide reverse;
+}
+
+::view-transition-new(.nav-back) {
+  --slide-offset: -36px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both df-vt-fade,
+    var(--duration-move) cubic-bezier(0.22, 1, 0.36, 1) both df-vt-slide;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ==========================================================================
+   Forced Colors Mode (Windows High Contrast — WCAG 1.4.1 / 1.4.11)
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  :where(a, button, input, textarea, [role="button"]) {
+    forced-color-adjust: auto;
+  }
+
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 3px;
+  }
+
+  .card-surface {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* ==========================================================================
+   Coarse Pointer Ergonomics (Touch Targets >= 44px)
+   ========================================================================== */
+
+@media (pointer: coarse) {
+  .touch-target {
+    min-block-size: 44px;
+    min-inline-size: 44px;
   }
 }

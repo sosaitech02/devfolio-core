@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Cruzmar Sosa — Software Architecture &amp; Full Stack Engineering</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error": "#690005", "inverse-surface": "#dfe2f0", "on-tertiary-container": "#96a9ff", "surface-container-low": "#171c25", "on-surface-variant": "#c5c5d3", "on-primary-fixed": "#00164e", "on-secondary-fixed": "#001e2d", "on-error-container": "#ffdad6", "secondary": "#81cfff", "on-primary": "#00287c", "secondary-container": "#009bd5", "surface-dim": "#0f131d", "on-surface": "#dfe2f0", "primary-container": "#0037a2", "primary-fixed": "#dce1ff", "tertiary-fixed-dim": "#b8c4ff", "surface-container": "#1b2029", "surface-variant": "#31353f", "surface-bright": "#353944", "on-secondary": "#00344b", "tertiary": "#b8c4ff", "on-secondary-fixed-variant": "#004c6b", "on-primary-fixed-variant": "#003cad", "outline-variant": "#444651", "tertiary-container": "#233a8e", "secondary-fixed": "#c6e7ff", "inverse-on-surface": "#2c303b", "surface-container-highest": "#31353f", "on-tertiary-fixed-variant": "#294094", "inverse-primary": "#2b55c8", "background": "#0f131d", "surface-container-high": "#262a34", "surface": "#0f131d", "primary": "#b5c4ff", "on-primary-container": "#92aaff", "on-secondary-container": "#002d41", "surface-tint": "#b5c4ff", "primary-fixed-dim": "#b5c4ff", "outline": "#8f909d", "error": "#ffb4ab", "on-tertiary": "#0b277c", "on-background": "#dfe2f0", "on-tertiary-fixed": "#001453", "error-container": "#93000a", "surface-container-lowest": "#0a0e17", "secondary-fixed-dim": "#81cfff", "tertiary-fixed": "#dde1ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": {}, "fontFamily": { "headline": ["Geist"], "display": ["Geist"], "body": ["Geist"], "label": ["Public Sans"] }, "fontSize": {} } } }</script></head><body class="bg-surface font-body text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-6"><div class="flex items-center shrink-0"><a class="text-base font-semibold tracking-[-0.03em] text-on-surface hover:text-primary transition-colors duration-150" data-path="proyectos" href="#">Cruzmar Sosa</a></div><nav class="hidden md:flex items-center gap-7 text-sm" data-active-classes="text-secondary font-medium relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-secondary"><a aria-current="page" class="transition-colors py-1 text-secondary font-medium relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-secondary" data-path="proyectos" href="#">Proyectos</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="experiencia" href="#">Experiencia</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="stack" href="#">Stack</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="sobre-mi" href="#">Sobre mí</a><a class="text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="contacto" href="#">Contacto</a></nav><div class="flex items-center gap-3 shrink-0"><div class="flex items-center p-0.5 rounded bg-surface-container text-xs font-label text-on-surface-variant"><span class="px-2 py-0.5 rounded text-on-primary bg-primary font-medium cursor-default">ES</span><span class="px-2 py-0.5 hover:text-on-surface cursor-pointer transition-colors">EN</span></div><button aria-label="Toggle theme" class="w-8 h-8 rounded flex items-center justify-center bg-surface-container text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">dark_mode</span></button><a class="hidden sm:inline-flex items-center justify-center h-8 px-3 text-xs font-medium text-secondary bg-surface-container border border-outline-variant hover:border-secondary hover:bg-surface-container-high transition-colors rounded" data-path="descargar-cv" href="#">Descargar CV</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- Case Study Technical Hero / Context Header -->
+<section class="w-full bg-surface-dim px-6 lg:px-12 py-10 lg:py-14">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Top Action Breadcrumb & System Route Monospace -->
+<div class="flex flex-wrap items-center justify-between gap-4 font-mono text-xs tracking-tight">
+<a class="inline-flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors duration-150" data-path="proyectos" href="#">
+<span class="material-symbols-outlined text-[16px] text-secondary">arrow_back</span>
+<span>Volver a proyectos</span>
+</a>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container rounded font-mono text-[11px] text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>[ /projects/sample-architecture ]</span>
+</div>
+</div>
+<!-- Status & Engineering Badges Row -->
+<div class="flex flex-wrap items-center gap-2.5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded text-xs font-mono font-medium text-secondary">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+          Fixture técnico · Fase 2
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-container rounded text-xs font-mono text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+          2026-02
+        </span>
+<span class="inline-flex items-center px-3 py-1 bg-surface-container rounded text-xs font-mono text-on-surface">
+          Arquitecto Frontend
+        </span>
+<span class="inline-flex items-center px-3 py-1 bg-primary-container text-on-primary-container rounded text-xs font-mono font-medium">
+          Next.js 15 · RSC · React 19
+        </span>
+</div>
+<!-- Main High-Impact H1 Title & Subtitle -->
+<div class="max-w-4xl space-y-4">
+<h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-on-surface font-headline leading-[1.12]">
+          Arquitectura Desacoplada de <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">Contenido MDX</span>
+</h1>
+<p class="text-base sm:text-lg text-on-surface-variant leading-relaxed max-w-3xl font-body">
+          Caso de estudio técnico que valida el motor bilingüe MDX + Zod de devfolio-core con compilación directa en React Server Components y garantía estricta de paridad ES/EN sin dependencia de CMS externos.
+        </p>
+</div>
+<!-- Action Button Row & Terminal Command Copy -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<a class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded bg-primary text-on-primary font-medium text-sm hover:bg-primary-fixed transition-colors shadow-sm" href="https://github.com" rel="noopener noreferrer" target="_blank">
+<span>Ver repositorio en GitHub</span>
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+<a class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors text-sm font-medium" href="#capturas">
+<span>Ver arquitectura en detalle</span>
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+</a>
+<div class="flex items-center gap-2 h-11 px-3.5 bg-surface-container-lowest rounded text-xs font-mono text-on-surface-variant">
+<span class="text-secondary select-none">$</span>
+<span class="text-on-surface" id="copy-target">pnpm validate:content</span>
+<button class="ml-2 inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded bg-surface-container-high hover:text-on-surface text-secondary transition-colors" id="copy-btn" onclick="navigator.clipboard.writeText('pnpm validate:content'); this.querySelector('.label').textContent = 'Copiado'; setTimeout(() =&gt; this.querySelector('.label').textContent = 'Copiar', 2000)" title="Copiar comando">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span class="label">Copiar</span>
+</button>
+</div>
+</div>
+<!-- Architectural Cover Schematic Visual (IDE & Pipeline Node Graph) -->
+<div class="w-full mt-4 bg-surface-container-lowest rounded-xl p-5 lg:p-7 shadow-xl overflow-hidden">
+<!-- Terminal Header -->
+<div class="flex flex-wrap items-center justify-between pb-5 gap-3">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error-container"></span>
+<span class="w-3 h-3 rounded-full bg-surface-variant"></span>
+<span class="w-3 h-3 rounded-full bg-secondary-container"></span>
+<span class="ml-2 font-mono text-xs text-on-surface-variant tracking-wider">pipeline.contentlayer.zod // ARCHITECTURAL FLOW ENGINE</span>
+</div>
+<div class="flex items-center gap-4 font-mono text-[11px]">
+<span class="text-secondary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Strict Parity: Verified
+            </span>
+<span class="text-on-surface-variant">Runtime: 0kb Client JS</span>
+<span class="text-tertiary">Build: Passing</span>
+</div>
+</div>
+<!-- Flow Diagram Visual Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-3 relative">
+<!-- Node 1 -->
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between gap-3 relative group hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-xs font-mono text-on-surface-variant">
+<span>NODE_01</span>
+<span class="text-secondary font-semibold">INPUT</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface font-mono">MDX Frontmatter</div>
+<div class="text-xs text-on-surface-variant mt-1 font-body">Colección versionada en <code>/content/projects/*.mdx</code></div>
+</div>
+<div class="pt-2 text-[10px] font-mono text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">description</span>
+              FS Parser / gray-matter
+            </div>
+</div>
+<!-- Node 2 -->
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between gap-3 relative group hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-xs font-mono text-on-surface-variant">
+<span>NODE_02</span>
+<span class="text-primary font-semibold">CONTRACT</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface font-mono">Zod Schema Validation</div>
+<div class="text-xs text-on-surface-variant mt-1 font-body">Validación estricta de tipos e invariantes en compilación</div>
+</div>
+<div class="pt-2 text-[10px] font-mono text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">verified_user</span>
+              z.infer&lt;ProjectType&gt;
+            </div>
+</div>
+<!-- Node 3 -->
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between gap-3 relative group hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-xs font-mono text-on-surface-variant">
+<span>NODE_03</span>
+<span class="text-tertiary font-semibold">TRANSFORM</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface font-mono">Server Loader (RSC)</div>
+<div class="text-xs text-on-surface-variant mt-1 font-body">AST compiling con @mdx-js/mdx y plugins remark/rehype</div>
+</div>
+<div class="pt-2 text-[10px] font-mono text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">memory</span>
+              Node 24 native pipeline
+            </div>
+</div>
+<!-- Node 4 -->
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between gap-3 relative group hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-xs font-mono text-on-surface-variant">
+<span>NODE_04</span>
+<span class="text-secondary font-semibold">OUTPUT</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface font-mono">Static Prerender (SSG)</div>
+<div class="text-xs text-on-surface-variant mt-1 font-body">generateStaticParams() para rutas bilingües /es y /en</div>
+</div>
+<div class="pt-2 text-[10px] font-mono text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">cloud_done</span>
+              Edge CDN Ready (HTML)
+            </div>
+</div>
+</div>
+<!-- Terminal Output Trace Strip -->
+<div class="mt-4 p-3 bg-surface-container-lowest rounded font-mono text-[11px] text-on-surface-variant flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="text-secondary">▶</span>
+<span>[info] Validating 14 project entries across [es, en] locales...</span>
+</div>
+<div class="text-primary font-medium">All frontmatter schemas matched 100% with zero type errors.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Reading Body (Asymmetric 12-Column Grid) -->
+<section class="w-full px-6 lg:px-12 py-12 lg:py-16 bg-surface">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+<!-- LEFT 8-COLUMN EDITORIAL MDX ARTICLE -->
+<article class="lg:col-span-8 flex flex-col gap-14 max-w-[760px]">
+<!-- Section 1: Contexto y problema -->
+<div class="scroll-mt-24 space-y-4" id="sec-contexto">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs text-secondary tracking-widest uppercase">01 // CONTEXTO &amp; PROBLEMA</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface font-headline">
+            El dilema de la gestión de contenido en ingeniería de software
+          </h2>
+<div class="space-y-4 text-on-surface-variant font-body leading-relaxed text-base">
+<p>
+              El desarrollo de portafolios de ingeniería y plataformas técnicas frecuentemente cae en dos extremos ineficientes: el acoplamiento directo de casos de estudio dentro del código JSX/TSX de presentación, o la dependencia prematura de gestores de contenido externos (Headless CMS SaaS) como Sanity, Strapi o Contentful.
+            </p>
+<p>
+              En el primer caso, editar un caso de estudio o mantener la paridad idiomática entre español e inglés requiere modificar componentes del árbol de React, generando commits de presentación ruidosos y aumentando drásticamente la fricción al documentar proyectos. En el segundo escenario, un CMS externo introduce llamadas asíncronas innecesarias en tiempo de ejecución, tokens de autenticación de terceros, riesgo de latencia y posibles rupturas de contrato tipado que TypeScript no puede garantizar de forma nativa durante el ciclo de compilación.
+            </p>
+<p>
+              Para un ingeniero de software que busca máxima velocidad de renderizado, trazabilidad basada en Git y cero costos operativos, se requería una solución arquitectónica desacoplada: contenido puramente declarativo en Markdown enriquecido (MDX), con contratos de esquema estrictos y compilación en el servidor sin añadir un solo byte al paquete JavaScript del cliente.
+            </p>
+</div>
+</div>
+<!-- Section 2: Objetivos técnicos -->
+<div class="scroll-mt-24 space-y-5" id="sec-objetivos">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs text-secondary tracking-widest uppercase">02 // OBJETIVOS TÉCNICOS</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface font-headline">
+            Restricciones de diseño e invariantes requeridos
+          </h2>
+<div class="grid grid-cols-1 gap-3.5 pt-2">
+<div class="flex items-start gap-3.5 p-4 rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">terminal</span>
+<div>
+<strong class="text-on-surface font-medium font-mono text-sm block">Validación estricta de tipos en compilación:</strong>
+<span class="text-on-surface-variant text-sm font-body">Cero tolerancia a campos ausentes o tipos incorrectos en frontmatter mediante esquemas de validación Zod ejecutados antes del empaquetado final.</span>
+</div>
+</div>
+<div class="flex items-start gap-3.5 p-4 rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">sync_alt</span>
+<div>
+<strong class="text-on-surface font-medium font-mono text-sm block">Paridad idiomática garantizada (ES / EN):</strong>
+<span class="text-on-surface-variant text-sm font-body">El pipeline de CI rechaza cualquier pull request o despliegue si existe un proyecto en <code>/content/projects/es</code> que carezca de su traducción exacta en <code>/content/projects/en</code>.</span>
+</div>
+</div>
+<div class="flex items-start gap-3.5 p-4 rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">database_off</span>
+<div>
+<strong class="text-on-surface font-medium font-mono text-sm block">Cero infraestructura externa o bases de datos:</strong>
+<span class="text-on-surface-variant text-sm font-body">Almacenamiento exclusivo en el repositorio Git. El historial de versiones del software es simultáneamente el historial de cambios del contenido técnico.</span>
+</div>
+</div>
+<div class="flex items-start gap-3.5 p-4 rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">bolt</span>
+<div>
+<strong class="text-on-surface font-medium font-mono text-sm block">0KB de sobrecarga JavaScript en el cliente:</strong>
+<span class="text-on-surface-variant text-sm font-body">Aprovechamiento integral de React Server Components (RSC) para procesar AST y renderizar HTML semántico puro sin hidratación de contenido estático en el navegador.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Solución y arquitectura -->
+<div class="scroll-mt-24 space-y-6" id="sec-solucion">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs text-secondary tracking-widest uppercase">03 // SOLUCIÓN &amp; ARQUITECTURA</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface font-headline">
+            El pipeline desacoplado capa por capa
+          </h2>
+<p class="text-on-surface-variant font-body leading-relaxed text-base">
+            La arquitectura descompone el ciclo de vida del contenido en cuatro capas funcionales independientes. Cada capa opera con contratos unívocos y archivos fuente aislados, evitando dependencias circulares y permitiendo sustituir el motor de renderizado sin alterar los esquemas de datos:
+          </p>
+<!-- Structured Architectural Data Table -->
+<div class="w-full overflow-x-auto rounded-xl bg-surface-container-low shadow-sm">
+<table class="w-full text-left font-body text-xs sm:text-sm">
+<thead class="bg-surface-container-high text-on-surface font-mono text-xs tracking-wider">
+<tr>
+<th class="p-3.5 sm:p-4">Capa</th>
+<th class="p-3.5 sm:p-4">Responsabilidad</th>
+<th class="p-3.5 sm:p-4">Implementación</th>
+<th class="p-3.5 sm:p-4">Archivo Fuente</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container text-on-surface-variant">
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-3.5 sm:p-4 font-mono font-medium text-secondary">Contrato Tipado</td>
+<td class="p-3.5 sm:p-4">Validación de esquemas e inferencia estricta de tipos TypeScript</td>
+<td class="p-3.5 sm:p-4">Zod 3.x schema validator</td>
+<td class="p-3.5 sm:p-4 font-mono text-xs text-on-surface">src/lib/content-schemas.ts</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-3.5 sm:p-4 font-mono font-medium text-secondary">Capa de Lectura</td>
+<td class="p-3.5 sm:p-4">Extracción de metadatos frontmatter y separación de cuerpo Markdown</td>
+<td class="p-3.5 sm:p-4">gray-matter + Node fs/promises</td>
+<td class="p-3.5 sm:p-4 font-mono text-xs text-on-surface">src/lib/projects.ts</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-3.5 sm:p-4 font-mono font-medium text-secondary">Pipeline Render</td>
+<td class="p-3.5 sm:p-4">Compilación de AST, parseo de sintaxis de código y componentes MDX</td>
+<td class="p-3.5 sm:p-4">@mdx-js/mdx + remark-gfm</td>
+<td class="p-3.5 sm:p-4 font-mono text-xs text-on-surface">src/lib/mdx.ts</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-3.5 sm:p-4 font-mono font-medium text-secondary">Gen. Estática</td>
+<td class="p-3.5 sm:p-4">Pre-renderizado determinista en tiempo de build para rutas SSG</td>
+<td class="p-3.5 sm:p-4">Next.js generateStaticParams</td>
+<td class="p-3.5 sm:p-4 font-mono text-xs text-on-surface">src/app/[lang]/projects/[slug]</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Section 4: Decisiones técnicas de arquitectura -->
+<div class="scroll-mt-24 space-y-6" id="sec-decisiones">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs text-secondary tracking-widest uppercase">04 // DECISIONES TÉCNICAS</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface font-headline">
+            Análisis comparativo de motores MDX
+          </h2>
+<!-- Technical Callout Box -->
+<div class="bg-surface-container-low p-6 rounded-xl space-y-4">
+<div class="flex items-center gap-2 font-mono text-xs text-secondary">
+<span class="material-symbols-outlined text-[18px]">difference</span>
+<span>// DECISIÓN: @mdx-js/mdx con React 19 RSC vs Next-MDX-Remote vs Contentlayer</span>
+</div>
+<div class="text-sm font-body text-on-surface-variant leading-relaxed space-y-3">
+<p>
+                Durante la fase de diseño de <code class="text-on-surface">devfolio-core</code>, se evaluaron tres alternativas predominantes en el ecosistema React:
+              </p>
+<ul class="space-y-2 list-none pl-1">
+<li class="flex items-start gap-2">
+<span class="text-error font-mono font-bold">×</span>
+<span><strong class="text-on-surface">Contentlayer:</strong> A pesar de su excelente experiencia de desarrollo en versiones previas de Next.js, el proyecto carece de soporte oficial activo, presenta problemas de compatibilidad con React 19 y Node 22+, y requiere hooks de empaquetado invasivos.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-error font-mono font-bold">×</span>
+<span><strong class="text-on-surface">next-mdx-remote:</strong> Si bien desacopla el contenido, añade serialización innecesaria entre servidor y cliente, forzando la inyección de componentes de hidratación en el frontend que incrementan el TTI (Time to Interactive).</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-secondary font-mono font-bold">✓</span>
+<span><strong class="text-on-surface">@mdx-js/mdx nativo sobre React Server Components:</strong> Se seleccionó la compilación directa en tiempo de compilación. El servidor ejecuta el compilador MDX y genera un árbol de elementos de React puros que viajan al cliente como HTML inerte, reduciendo la huella de JavaScript de la página a prácticamente 0 KB.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Section 5: Retos técnicos y soluciones implementadas -->
+<div class="scroll-mt-24 space-y-6" id="sec-retos">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs text-secondary tracking-widest uppercase">05 // RETOS &amp; SOLUCIONES</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface font-headline">
+            Ingeniería de robustez en producción
+          </h2>
+<div class="space-y-6">
+<!-- Reto 1 -->
+<div class="p-5 rounded-xl bg-surface-container space-y-2">
+<div class="flex items-center gap-2 font-mono text-xs text-secondary">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-[10px]">1</span>
+<span class="font-semibold text-on-surface">Verificación automatizada de paridad bilingüe ES / EN</span>
+</div>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed pl-7">
+                Uno de los mayores riesgos en sitios con internacionalización manual es la divergencia de contenido: publicar un proyecto en español sin su correlativo en inglés. Para resolverlo, se programó un script en TypeScript (<code class="text-on-surface font-mono text-xs">scripts/validate-content.ts</code>) ejecutado como hook <code class="text-on-surface font-mono text-xs">pre-commit</code> mediante Husky y en el workflow de GitHub Actions. Si las listas ordenadas de slugs entre idiomas no coinciden al 100%, el proceso aborta con código de salida 1 e indica el archivo faltante.
+              </p>
+</div>
+<!-- Reto 2 -->
+<div class="p-5 rounded-xl bg-surface-container space-y-2">
+<div class="flex items-center gap-2 font-mono text-xs text-secondary">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-[10px]">2</span>
+<span class="font-semibold text-on-surface">Generación estática determinista sin cookies() dinámicas</span>
+</div>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed pl-7">
+                Cualquier invocación accidental a <code class="text-on-surface font-mono text-xs">headers()</code> o detección dinámica de idioma en el layout raíz desactiva el renderizado SSG de Next.js, degradando las rutas a SSR dinámico. La solución radicó en mover la resolución de idioma a parámetros de ruta tipados (<code class="text-on-surface font-mono text-xs">/[lang]/projects/[slug]</code>), permitiendo a <code class="text-on-surface font-mono text-xs">generateStaticParams()</code> pre-calcular todas las combinaciones en build time.
+              </p>
+</div>
+<!-- Reto 3 -->
+<div class="p-5 rounded-xl bg-surface-container space-y-2">
+<div class="flex items-center gap-2 font-mono text-xs text-secondary">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-[10px]">3</span>
+<span class="font-semibold text-on-surface">Inyección de metadatos SEO tipados y esquemas JSON-LD</span>
+</div>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed pl-7">
+                Se construyó una función de orden superior <code class="text-on-surface font-mono text-xs">generateMetadata()</code> que consume directamente el objeto tipado por Zod. Esto genera dinámicamente etiquetas OpenGraph bilingües, URLs canónicas con tags <code class="text-on-surface font-mono text-xs">hreflang</code> y metadatos de esquema estructurado schema.org sin duplicar cadenas de texto.
+              </p>
+</div>
+</div>
+</div>
+<!-- Section 6: Resultados verificables -->
+<div class="scroll-mt-24 space-y-6" id="sec-resultados">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs text-secondary tracking-widest uppercase">06 // RESULTADOS VERIFICABLES</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface font-headline">
+            Validación de invariantes del sistema
+          </h2>
+<div class="p-6 rounded-xl bg-surface-container-low space-y-4">
+<div class="space-y-3 font-mono text-xs sm:text-sm text-on-surface">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">check_circle</span>
+<span>Validación automatizada en CI/CD: tiempo de ejecución promedio del script de verificación inferior a 450ms.</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">check_circle</span>
+<span>Generación estática completa: 100% de las rutas de casos de estudio pre-renderizadas como HTML inerte en el edge.</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">check_circle</span>
+<span>Cero regresiones de esquema: cualquier campo faltante en nuevos archivos .mdx es detectado de forma inmediata en tiempo de pre-commit.</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">check_circle</span>
+<span>Autonomía técnica absoluta: el contenido técnico evoluciona en paralelo al código sin dependencias ni suscripciones externas.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 7: Capturas y vistas del sistema -->
+<div class="scroll-mt-24 space-y-6" id="sec-capturas">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs text-secondary tracking-widest uppercase">07 // CAPTURAS &amp; VISTAS DEL SISTEMA</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface font-headline">
+            Diagramas y salidas de verificación de arquitectura
+          </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Visual Frame 1 -->
+<div class="flex flex-col gap-2.5">
+<div class="w-full aspect-video rounded-xl bg-surface-container-lowest overflow-hidden flex flex-col justify-between p-4 shadow-sm relative group">
+<div class="flex items-center justify-between font-mono text-[10px] text-on-surface-variant">
+<span>TERMINAL // CI PIPELINE</span>
+<span class="text-secondary font-bold">STATUS: OK</span>
+</div>
+<div class="font-mono text-[11px] text-on-surface space-y-1">
+<div class="text-on-surface-variant">&gt; devfolio-core@1.0.0 validate:content</div>
+<div class="text-secondary">✓ Loaded Zod schema (projectSchemaV1)</div>
+<div class="text-on-surface">✓ [es] 7 projects verified</div>
+<div class="text-on-surface">✓ [en] 7 projects verified</div>
+<div class="text-primary font-semibold">✓ Perfect locale parity: 100%</div>
+</div>
+<div class="text-[10px] font-mono text-on-surface-variant flex items-center justify-between">
+<span>Exit code: 0</span>
+<span>Duration: 382ms</span>
+</div>
+</div>
+<p class="text-xs font-mono text-on-surface-variant">
+                Fig 1.1: Salida de la consola durante la ejecución del script de validación estricta de paridad en CI.
+              </p>
+</div>
+<!-- Visual Frame 2 -->
+<div class="flex flex-col gap-2.5">
+<div class="w-full aspect-video rounded-xl bg-surface-container-lowest overflow-hidden flex flex-col justify-between p-4 shadow-sm relative group">
+<div class="flex items-center justify-between font-mono text-[10px] text-on-surface-variant">
+<span>SCHEMA // ZOD DEFINITION</span>
+<span class="text-primary font-bold">TYPESCRIPT</span>
+</div>
+<div class="font-mono text-[11px] text-on-surface space-y-1 overflow-x-auto">
+<span class="text-tertiary">export const</span> projectSchema = z.object({<br/>
+                    title: z.string().min(5),<br/>
+                    slug: z.string().regex(/^[a-z0-9-]+$/),<br/>
+                    publishedAt: z.string().date(),<br/>
+                    stack: z.array(z.string())<br/>
+                  });
+                </div>
+<div class="text-[10px] font-mono text-on-surface-variant flex items-center justify-between">
+<span>src/lib/content-schemas.ts</span>
+<span class="text-secondary">Strict Contract</span>
+</div>
+</div>
+<p class="text-xs font-mono text-on-surface-variant">
+                Fig 1.2: Definición del contrato tipado Zod que gobierna todos los archivos MDX del repositorio.
+              </p>
+</div>
+</div>
+</div>
+</article>
+<!-- RIGHT 4-COLUMN STICKY ENGINEERING SIDEBAR -->
+<aside class="lg:col-span-4 w-full flex flex-col gap-6 lg:sticky lg:top-24">
+<!-- Card 1: Ficha técnica de ingeniería -->
+<div class="w-full bg-surface-container-low rounded-xl p-6 shadow-md space-y-6">
+<div class="flex items-center justify-between pb-3">
+<span class="font-mono text-xs font-semibold text-secondary tracking-wider">// SYSTEM_METADATA // 01</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="space-y-4 text-xs font-mono">
+<div class="flex flex-col gap-1 pb-3">
+<span class="text-on-surface-variant uppercase text-[10px] tracking-wider">Rol &amp; Responsabilidad</span>
+<span class="text-on-surface font-semibold text-sm">Arquitecto Frontend</span>
+</div>
+<div class="flex flex-col gap-1 pb-3">
+<span class="text-on-surface-variant uppercase text-[10px] tracking-wider">Fecha de Implementación</span>
+<span class="text-on-surface font-semibold text-sm">2026-02</span>
+</div>
+<div class="flex flex-col gap-1 pb-3">
+<span class="text-on-surface-variant uppercase text-[10px] tracking-wider">Estado del Proyecto</span>
+<span class="text-secondary font-semibold text-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+                Fixture técnico · Fase 2
+              </span>
+</div>
+<div class="flex flex-col gap-1 pb-3">
+<span class="text-on-surface-variant uppercase text-[10px] tracking-wider">Tipo de Solución</span>
+<span class="text-on-surface font-semibold text-sm">Motor de Contenido · Arquitectura</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-on-surface-variant uppercase text-[10px] tracking-wider">Patrón Arquitectónico</span>
+<span class="text-primary font-semibold text-sm">RSC Decoupled Pipeline (SSG)</span>
+</div>
+</div>
+<!-- Stack Tecnológico -->
+<div class="space-y-3 pt-2">
+<span class="text-on-surface-variant uppercase font-mono text-[10px] tracking-wider block">Stack Primario</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 rounded bg-surface-container font-mono text-xs text-on-surface font-medium">Next.js 15</span>
+<span class="px-2.5 py-1 rounded bg-surface-container font-mono text-xs text-on-surface font-medium">TypeScript 5</span>
+<span class="px-2.5 py-1 rounded bg-surface-container font-mono text-xs text-on-surface font-medium">React 19</span>
+<span class="px-2.5 py-1 rounded bg-surface-container font-mono text-xs text-secondary font-medium">Zod 3</span>
+<span class="px-2.5 py-1 rounded bg-surface-container font-mono text-xs text-on-surface font-medium">MDX</span>
+</div>
+</div>
+<div class="space-y-3">
+<span class="text-on-surface-variant uppercase font-mono text-[10px] tracking-wider block">Stack Secundario &amp; Herramientas</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-mono text-[11px] text-on-surface-variant">Tailwind CSS</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-mono text-[11px] text-on-surface-variant">remark-gfm</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-mono text-[11px] text-on-surface-variant">gray-matter</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-mono text-[11px] text-on-surface-variant">Node.js 24</span>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="pt-2 flex flex-col gap-2.5">
+<a class="w-full inline-flex items-center justify-center gap-2 h-10 px-4 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface text-xs font-medium font-mono transition-colors" href="https://github.com" rel="noopener noreferrer" target="_blank">
+<span>Repositorio en GitHub</span>
+<span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+</a>
+<div class="flex items-center justify-between p-2.5 bg-surface-container-lowest rounded text-[11px] font-mono text-on-surface-variant">
+<span>git clone devfolio-core</span>
+<button class="text-secondary hover:text-on-surface transition-colors" onclick="navigator.clipboard.writeText('git clone https://github.com/cruzmarsosa/devfolio-core.git')" title="Copiar comando git">
+<span class="material-symbols-outlined text-[15px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Sticky Table of Contents -->
+<nav aria-label="Tabla de contenidos del caso de estudio" class="w-full bg-surface-container-low rounded-xl p-6 shadow-md space-y-4">
+<div class="flex items-center justify-between pb-2">
+<span class="font-mono text-xs font-semibold text-on-surface tracking-wider uppercase">// ÍNDICE DE CONTENIDOS</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">list</span>
+</div>
+<ul class="space-y-1.5 font-mono text-xs text-on-surface-variant">
+<li>
+<a class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-surface-container hover:text-secondary transition-colors" href="#sec-contexto">
+<span class="text-secondary font-bold">01.</span>
+<span>Contexto y problema</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-surface-container hover:text-secondary transition-colors" href="#sec-objetivos">
+<span class="text-secondary font-bold">02.</span>
+<span>Objetivos técnicos</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-surface-container hover:text-secondary transition-colors" href="#sec-solucion">
+<span class="text-secondary font-bold">03.</span>
+<span>Solución y arquitectura</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-surface-container hover:text-secondary transition-colors" href="#sec-decisiones">
+<span class="text-secondary font-bold">04.</span>
+<span>Decisiones técnicas</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-surface-container hover:text-secondary transition-colors" href="#sec-retos">
+<span class="text-secondary font-bold">05.</span>
+<span>Retos y soluciones</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-surface-container hover:text-secondary transition-colors" href="#sec-resultados">
+<span class="text-secondary font-bold">06.</span>
+<span>Resultados verificables</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-surface-container hover:text-secondary transition-colors" href="#sec-capturas">
+<span class="text-secondary font-bold">07.</span>
+<span>Capturas del sistema</span>
+</a>
+</li>
+</ul>
+</nav>
+</aside>
+</div>
+</section>
+<!-- Bottom Project-to-Project Navigation Bar -->
+<section class="w-full bg-surface-container-lowest px-6 lg:px-12 py-12 lg:py-16">
+<div class="max-w-7xl mx-auto flex flex-col gap-6">
+<div class="flex items-center justify-between font-mono text-xs text-on-surface-variant">
+<span>// EXPLORACIÓN DE PROYECTOS ARQUITECTÓNICOS</span>
+<span>INDEX 03 OF 07</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Previous Project Card -->
+<a class="group p-6 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 flex flex-col justify-between gap-4 shadow-sm" data-path="proyectos-minamarcacion" href="#">
+<div class="flex items-center gap-2 font-mono text-xs text-on-surface-variant group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-[16px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span>PROYECTO ANTERIOR</span>
+</div>
+<div>
+<div class="text-lg font-bold text-on-surface group-hover:text-secondary transition-colors font-headline">
+              MinaMarcación
+            </div>
+<div class="text-xs text-on-surface-variant mt-1 font-body">
+              Control Operativo &amp; Trazabilidad de Asistencia Minera con sincronización offline
+            </div>
+</div>
+<div class="flex items-center gap-2 font-mono text-[11px] text-on-surface-variant">
+<span>[ Next.js · PostgreSQL · Tailwind ]</span>
+</div>
+</a>
+<!-- Next Project Card -->
+<a class="group p-6 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 flex flex-col justify-between gap-4 text-right shadow-sm" data-path="proyectos-rentapp" href="#">
+<div class="flex items-center justify-end gap-2 font-mono text-xs text-on-surface-variant group-hover:text-secondary transition-colors">
+<span>SIGUIENTE PROYECTO</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+<div>
+<div class="text-lg font-bold text-on-surface group-hover:text-secondary transition-colors font-headline">
+              Rent_App
+            </div>
+<div class="text-xs text-on-surface-variant mt-1 font-body">
+              Gestión Integral de Alquileres Inmobiliarios, Contratos y Conciliación de Pagos
+            </div>
+</div>
+<div class="flex items-center justify-end gap-2 font-mono text-[11px] text-on-surface-variant">
+<span>[ React · Node.js · Express · MySQL ]</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+</div>
+<script>
+  (function() {
+    // Smooth scrolling for technical TOC links with offset
+    const tocLinks = document.querySelectorAll('nav a[href^="#"]');
+    tocLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Active state tracker for the sidebar TOC
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const sections = document.querySelectorAll('article > div[id^="sec-"]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const activeId = entry.target.id;
+          tocLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === '#' + activeId) {
+              link.classList.add('bg-surface-container', 'text-secondary', 'font-medium');
+              link.classList.remove('text-on-surface-variant');
+            } else {
+              link.classList.remove('bg-surface-container', 'text-secondary', 'font-medium');
+              link.classList.add('text-on-surface-variant');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+  })();
+</script></main><footer class="w-full bg-surface-container-low"><div class="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-6"><div class="flex flex-col sm:flex-row items-center sm:items-baseline gap-2 sm:gap-4 text-center sm:text-left"><span class="text-sm font-semibold tracking-[-0.02em] text-on-surface">Cruzmar Sosa</span><span class="text-xs text-on-surface-variant font-label">© 2026 Cruzmar Ramón Sosa Rubí. Software Architecture &amp; Full Stack Engineering.</span></div><div class="flex items-center gap-6 text-xs text-on-surface-variant font-label"><a class="hover:text-secondary transition-colors" data-path="github" href="#">GitHub</a><a class="hover:text-secondary transition-colors" data-path="linkedin" href="#">LinkedIn</a><a class="hover:text-secondary transition-colors" data-path="contacto" href="#">Contacto</a></div></div></footer></body></html>

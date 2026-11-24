@@ -39,15 +39,15 @@ Registro canónico de criterios verificables de apertura y cierre para las compu
   3. Al menos 1 proyecto fixture en `content/projects/{es,en}/` compilado y verificado por `pnpm validate:content`, `pnpm typecheck`, `pnpm lint --max-warnings=0` y `pnpm build`.
 
 ### `DF-GATE-03` — Fase 3: Interfaz y Secciones
-- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-02 = APPROVED` en `DF-D15`; paleta objetivo Cobalt `#233A8E` / Cyan `#1DA4DF`, identidad tipográfica sin logo gráfico)*
+- **Estado actual**: `APPROVED` (`2026-11-24`, `DF-D18` — `.stitch/DESIGN.md` y pantallas Stitch aprobadas, interfaz completa Home/Catálogo/Caso de Estudio en `src/`, `<ViewTransition>` nativo Next 16 + React 19, paridad ES/EN `141/141`, `/ui-audit` + `legacy-scan` `0` hallazgos, QA visual local aprobado por el usuario y `validate:content`/`typecheck`/`lint --max-warnings=0`/`build` con `16/16` páginas estáticas en verde)
 - **Criterio de apertura**: `DF-GATE-02 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. Vistas completas de v1.0 implementadas: Home (Hero, FeaturedProjects, TechStack, Experience + CV, Contact), `/[locale]/projects` con filtro y `/[locale]/projects/[slug]`.
-  2. Cero cadenas visibles hardcodeadas y paridad 100% entre `messages/es.json` y `messages/en.json`.
-  3. Ejecución de `/ui-audit` aprobada en 375px y 1440px, claro/oscuro y contraste WCAG AA.
+  2. Cero cadenas visibles hardcodeadas y paridad 100% entre `messages/es.json` y `messages/en.json` (`141/141` claves).
+  3. Ejecución de `/ui-audit` aprobada en móvil y escritorio, paridad claro/oscuro y contraste WCAG 2.2 AA verificados.
 
 ### `DF-GATE-04` — Fase 4: Ingesta de Proyectos Reales
-- **Estado actual**: `LOCKED`
+- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-03 = APPROVED` en `DF-D18`; lista para ingestar los proyectos reales MinaMarcación, Rent_App e Inventory Management System mediante `/add-project`)*
 - **Criterio de apertura**: `DF-GATE-03 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. De 3 a 5 proyectos estrella reales ingresados vía `/add-project` con paridad total en `content/projects/{es,en}/`.

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import {
@@ -7,6 +7,8 @@ import {
   setRequestLocale,
 } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { routing } from "@/i18n/routing";
 import "@/styles/globals.css";
@@ -14,15 +16,24 @@ import "@/styles/globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://devfolio-core.vercel.app";
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#070b14" },
+  ],
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -84,7 +95,10 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
-  const messages = await getMessages();
+  const [messages, tNav] = await Promise.all([
+    getMessages(),
+    getTranslations({ locale, namespace: "Nav" }),
+  ]);
 
   return (
     <html
@@ -95,7 +109,12 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider defaultTheme="system">
           <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
+            <a href="#main-content" className="skip-link">
+              {tNav("skipToMain")}
+            </a>
+            <Navbar locale={locale} />
+            <div className="flex flex-1 flex-col">{children}</div>
+            <Footer locale={locale} />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
