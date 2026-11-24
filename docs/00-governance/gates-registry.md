@@ -31,15 +31,15 @@ Registro canónico de criterios verificables de apertura y cierre para las compu
   4. Despliegue activo en Vercel (`https://devfolio-core.vercel.app/`, estado `READY`) validado en PC y móvil (`/es` ↔ `/en`, tema claro/oscuro, 404 localizado, `robots.txt`, `sitemap.xml`) y `pnpm typecheck && pnpm lint --max-warnings=0 && pnpm build` en verde.
 
 ### `DF-GATE-02` — Fase 2: Motor de Contenido
-- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-01 = APPROVED`, sin iniciar todavía)*
+- **Estado actual**: `APPROVED` (`2026-11-24`, `DF-D15` — motor MDX + Zod verificado, datos reales bilingües del CV 2026 cargados en `content/data/*`, fixture `sample-architecture.mdx` compilado en `/es` y `/en`, `pnpm validate:content` integrado en CI y `typecheck`/`lint --max-warnings=0`/`build` en verde)
 - **Criterio de apertura**: `DF-GATE-01 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. Esquema Zod estricto para frontmatter MDX y lector `src/lib/projects.ts` con fallo explícito ante campos faltantes o asimetría ES/EN.
-  2. Módulos tipados `content/data/{experience,skills-matrix,socials}.ts` validados.
-  3. Al menos 1 proyecto fixture en `content/projects/{es,en}/` compilado y verificado por `pnpm typecheck && pnpm build`.
+  2. Módulos tipados `content/data/{experience,skills-matrix,socials}.ts` validados con datos reales bilingües (`isPlaceholder: false`).
+  3. Al menos 1 proyecto fixture en `content/projects/{es,en}/` compilado y verificado por `pnpm validate:content`, `pnpm typecheck`, `pnpm lint --max-warnings=0` y `pnpm build`.
 
 ### `DF-GATE-03` — Fase 3: Interfaz y Secciones
-- **Estado actual**: `LOCKED`
+- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-02 = APPROVED` en `DF-D15`; paleta objetivo Cobalt `#233A8E` / Cyan `#1DA4DF`, identidad tipográfica sin logo gráfico)*
 - **Criterio de apertura**: `DF-GATE-02 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. Vistas completas de v1.0 implementadas: Home (Hero, FeaturedProjects, TechStack, Experience + CV, Contact), `/[locale]/projects` con filtro y `/[locale]/projects/[slug]`.

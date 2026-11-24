@@ -6,11 +6,13 @@ Usa exactamente este contrato de frontmatter (validado por Zod en Fase 2) en amb
 ---
 slug: "nombre-del-proyecto"
 title: "Título claro y específico del proyecto"
-summary: "Resumen de 1 a 2 frases con foco en el problema resuelto y valor técnico (máx. 160 caracteres)."
+summary: "Resumen de 1 a 2 frases con foco en el problema resuelto y valor técnico (máx. 220 caracteres)."
+problem: "Descripción concisa del problema técnico o de negocio resuelto por el proyecto."
 role: "Full-Stack Developer"
 date: "2026-01"
 featured: true
 order: 1
+status: "published"
 stack:
   - "Next.js"
   - "TypeScript"

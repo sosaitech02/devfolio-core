@@ -29,10 +29,10 @@ Orquestador maestro del repositorio `devfolio-core`. Coordina la ejecución téc
 El orquestador distingue con precisión quirúrgica entre lo que **ya está instalado en `package.json`** y las capas **planificadas para fases posteriores** (prohibido asumirlas como instaladas mientras su compuerta esté `LOCKED`):
 
 ### 1.1 Estado real del Stack por Fase
-- **Capas Instaladas y Verificadas (Fase 0 + Fase 1 — `DF-GATE-00` y `DF-GATE-01` `APPROVED`)**:
+- **Capas Instaladas y Verificadas (Fase 0 + Fase 1 + Fase 2 — `DF-GATE-00`, `DF-GATE-01` y `DF-GATE-02` `APPROVED`)**:
   - **Next.js `16.4.6`** (App Router, Turbopack, `cacheComponents: true`, `partialPrefetching: true`, convención oficial `src/proxy.ts`)
   - **React `19.3.0`** y **React DOM `19.3.0`**
-  - **TypeScript `5.9.3`** (`strict: true`, alias `@/*` → `./src/*`)
+  - **TypeScript `5.9.3`** (`strict: true`, alias `@/*` → `./src/*`, `.agents` excluido)
   - **Tailwind CSS `4.3.3`** (`@tailwindcss/turbopack` `4.3.3`)
   - **ESLint `9.39.5`** (`eslint-config-next` `16.4.6`, `.agents/**` excluido)
   - **Gestor de paquetes**: `pnpm` `12.23.0`
@@ -40,10 +40,13 @@ El orquestador distingue con precisión quirúrgica entre lo que **ya está inst
   - **`shadcn/ui` base** (`components.json`, `src/lib/utils.ts`, primitivos `button` y `badge` en `src/components/ui/`, `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`)
   - **`lucide-react` `1.78.0`** (iconografía ligera con tree-shaking)
   - **`ThemeProvider` nativo CSS-first** (`prefers-color-scheme` + `data-theme` en `src/styles/globals.css`, `useSyncExternalStore`, `0` etiquetas `<script>`/`<Script>` en `src/`)
-  - **Infraestructura CI y Vercel**: `.github/workflows/ci.yml` (`PASS`), `vercel.json` y despliegue verificado en `https://devfolio-core.vercel.app/` (`READY`)
-- **Capas Planificadas para Fase 2 (`DF-GATE-02` — `READY_TO_START`, No instaladas aún)**:
-  - **`MDX`** (procesamiento de casos de estudio bilingües en `content/projects/{es,en}/*.mdx`)
-  - **`Zod`** (esquemas de validación estricta en `src/lib/projects.ts` y datos tipados en `content/data/*.ts`)
+  - **Motor MDX** (`@mdx-js/mdx` `3.1.1`, `remark-gfm` `4.0.1`, `gray-matter` `4.0.3`, `@types/mdx` `2.0.14`, compilador RSC `src/lib/mdx.ts`, lector bilingüe `src/lib/projects.ts` y fixture `content/projects/{es,en}/sample-architecture.mdx`)
+  - **`Zod` `4.6.7`** (esquemas centralizados en `src/lib/content-schemas.ts`, datos reales bilingües del CV en `content/data/{socials,skills-matrix,experience}.ts` y validador CI `pnpm validate:content` en `scripts/validate-content.mjs`)
+  - **Infraestructura CI y Vercel**: `.github/workflows/ci.yml` (`validate:content` + `typecheck` + `lint` + `build`), `vercel.json`, `src/app/sitemap.ts` dinámico y despliegue verificado en `https://devfolio-core.vercel.app/` (`READY`)
+- **Próximas Fases del Roadmap (Stack base v1.0 completo; pendientes de ejecución controlada por compuertas)**:
+  - **Fase 3 (`DF-GATE-03` — `READY_TO_START`)**: diseño y construcción de secciones UI/catálogo/detalle sobre paleta Cobalt `#233A8E` / Cyan `#1DA4DF` (sin logo gráfico) y auditoría `/ui-audit`.
+  - **Fase 4 (`DF-GATE-04` — `LOCKED`)**: ingesta de 3 a 5 proyectos reales vía `/add-project` reemplazando el fixture temporal.
+  - **Fase 5 (`DF-GATE-05` — `LOCKED`)**: auditoría `/pre-deploy`, OpenGraph bilingüe, CVs en PDF y lanzamiento en producción.
 
 ### 1.2 Arquitectura en 3 Módulos Independientes
 - **Módulo A — Gobernanza e Inteligencia (`.agents/` y `docs/`)**:

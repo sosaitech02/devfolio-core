@@ -1,0 +1,46 @@
+---
+slug: "sample-architecture"
+title: "[Phase 2 Fixture] Decoupled MDX Content Architecture"
+summary: "Fixture case study to validate MDX compilation, strict Zod schemas, and ES/EN parity in devfolio-core."
+problem: "Verify that new portfolio projects can be published purely as validated MDX files without editing UI components or breaking bilingual parity."
+role: "Frontend Architect"
+date: "2026-02"
+featured: true
+order: 1
+status: "fixture"
+stack:
+  - "Next.js"
+  - "TypeScript"
+  - "Tailwind CSS"
+  - "MDX"
+  - "Zod"
+repoUrl: "https://github.com/placeholder-username/devfolio-core"
+demoUrl: "https://devfolio-core.vercel.app/en"
+coverAlt: "Conceptual diagram of the MDX and Zod content pipeline in devfolio-core"
+highlights:
+  - "Strict frontmatter validation at build time and in CI powered by Zod."
+  - "100% verified parity across /es and /en routes without external CMSs or databases."
+---
+
+> **Temporary Phase 2 Fixture**: this file validates the MDX + Zod engine and will be replaced in Phase 4 with real portfolio case studies.
+
+## Problem and Context
+
+Publishing new engineering projects often creates friction when content is coupled to component JSX. This fixture validates the decoupled content pipeline of `devfolio-core`.
+
+## Architecture and Technical Decisions
+
+| Layer | Responsibility | Implementation |
+| :--- | :--- | :--- |
+| Contract | Validate frontmatter schema | `Zod` (`src/lib/content-schemas.ts`) |
+| Loader | Read and sort MDX files on the server | `gray-matter` (`src/lib/projects.ts`) |
+| Renderer | Compile MDX + GFM in Server Components | `@mdx-js/mdx` + `remark-gfm` (`src/lib/mdx.ts`) |
+
+## Technical Challenges and Solutions
+
+1. **Strict ES/EN parity**: the automated `pnpm validate:content` validator fails explicitly whenever a slug or translation key is missing.
+2. **Static prerendering**: `generateStaticParams` generates static routes per locale and slug without relying on `cookies()`.
+
+## Expected Outcome
+
+The content engine is ready for Phase 3 UI implementation and Phase 4 ingestion of real projects through `/add-project`.

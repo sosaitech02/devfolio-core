@@ -35,5 +35,23 @@
     "title": "Page not found",
     "description": "The requested route does not exist or has been moved.",
     "backHome": "Back to home"
+  },
+  "ProjectsStub": {
+    "metaTitle": "Projects",
+    "metaDescription": "Technical project catalog validated with MDX and Zod in devfolio-core.",
+    "badge": "Phase 2 — Content Engine",
+    "heading": "Projects catalog (MDX Stub)",
+    "subheading": "Minimal technical route to validate static MDX project loading and technology tags.",
+    "tagsLabel": "Detected technologies",
+    "backHome": "Back to home",
+    "backToProjects": "Back to projects",
+    "viewCaseStudy": "View case study",
+    "repositoryLink": "Repository",
+    "demoLink": "Live demo",
+    "roleLabel": "Role",
+    "dateLabel": "Date",
+    "statusLabel": "Status",
+    "problemLabel": "Problem solved",
+    "emptyState": "No published projects yet."
   }
 }
