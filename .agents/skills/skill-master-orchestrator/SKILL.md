@@ -29,28 +29,28 @@ Orquestador maestro del repositorio `devfolio-core`. Coordina la ejecución téc
 El orquestador distingue con precisión quirúrgica entre lo que **ya está instalado en `package.json`** y las capas **planificadas para fases posteriores** (prohibido asumirlas como instaladas mientras su compuerta esté `LOCKED`):
 
 ### 1.1 Estado real del Stack por Fase
-- **Capas Instaladas y Verificadas (Fase 0 + Fase 1 + Fase 2 — `DF-GATE-00`, `DF-GATE-01` y `DF-GATE-02` `APPROVED`)**:
-  - **Next.js `16.4.6`** (App Router, Turbopack, `cacheComponents: true`, `partialPrefetching: true`, convención oficial `src/proxy.ts`)
-  - **React `19.3.0`** y **React DOM `19.3.0`**
+- **Capas Instaladas y Verificadas (Fase 0 + Fase 1 + Fase 2 + Fase 3 — `DF-GATE-00`, `DF-GATE-01`, `DF-GATE-02` y `DF-GATE-03` `APPROVED`)**:
+  - **Next.js `16.4.6`** (App Router, Turbopack, `cacheComponents: true`, `partialPrefetching: true`, convención oficial `src/proxy.ts`, `<Link transitionTypes>` nativo)
+  - **React `19.3.0`** y **React DOM `19.3.0`** (`<ViewTransition>` y `addTransitionType` nativos sin banderas experimentales)
   - **TypeScript `5.9.3`** (`strict: true`, alias `@/*` → `./src/*`, `.agents` excluido)
   - **Tailwind CSS `4.3.3`** (`@tailwindcss/turbopack` `4.3.3`)
   - **ESLint `9.39.5`** (`eslint-config-next` `16.4.6`, `.agents/**` excluido)
   - **Gestor de paquetes**: `pnpm` `12.23.0`
-  - **`next-intl` `4.15.3`** (`locales: ['es', 'en']`, `defaultLocale: 'es'`, `localePrefix: 'always'`, `src/i18n/{routing,request,navigation}.ts`, `src/proxy.ts`, `messages/{es,en}.json`)
-  - **`shadcn/ui` base** (`components.json`, `src/lib/utils.ts`, primitivos `button` y `badge` en `src/components/ui/`, `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`)
+  - **`next-intl` `4.15.3`** (`locales: ['es', 'en']`, `defaultLocale: 'es'`, `localePrefix: 'always'`, `src/i18n/{routing,request,navigation}.ts`, `src/proxy.ts`, paridad `141/141` claves en `messages/{es,en}.json`)
+  - **Sistema de Diseño Stitch y `shadcn/ui`** (`.stitch/DESIGN.md`, `.stitch/metadata.json`, `.stitch/designs/*`, `.agents/rules/design-system.md`; paleta Cobalt `#233A8E`/`#3B63D6` y Cyan `#1DA4DF`/`#0369A1` WCAG 2.2 AA Light/Dark + Forced Colors en `src/styles/globals.css`; primitivos `button`, `badge`, `card`, `input`, `textarea`, `separator` y `skeleton` en `src/components/ui/`)
   - **`lucide-react` `1.78.0`** (iconografía ligera con tree-shaking)
   - **`ThemeProvider` nativo CSS-first** (`prefers-color-scheme` + `data-theme` en `src/styles/globals.css`, `useSyncExternalStore`, `0` etiquetas `<script>`/`<Script>` en `src/`)
+  - **Interfaz v1.0 y View Transitions (Fase 3)**: layout global (`Navbar` sticky anclado, `NavLinks`, `MobileNavDrawer` con `<dialog>` nativo, `Footer`), 5 secciones RSC de Home (`HeroSection`, `FeaturedProjects`, `TechStackSection`, `ExperienceSection`, `ContactSection` + `CopyEmailButton` y `ContactForm`), catálogo filtrable (`/[locale]/projects` + `ProjectsCatalogClient` + `ProjectCard`), detalle MDX (`/[locale]/projects/[slug]` + `MdxComponents`), skeletons `loading.tsx` (`CLS = 0`) y transiciones compartidas/direccionales `<ViewTransition>`
   - **Motor MDX** (`@mdx-js/mdx` `3.1.1`, `remark-gfm` `4.0.1`, `gray-matter` `4.0.3`, `@types/mdx` `2.0.14`, compilador RSC `src/lib/mdx.ts`, lector bilingüe `src/lib/projects.ts` y fixture `content/projects/{es,en}/sample-architecture.mdx`)
-  - **`Zod` `4.6.7`** (esquemas centralizados en `src/lib/content-schemas.ts`, datos reales bilingües del CV en `content/data/{socials,skills-matrix,experience}.ts` y validador CI `pnpm validate:content` en `scripts/validate-content.mjs`)
+  - **`Zod` `4.6.7`** (esquemas centralizados en `src/lib/content-schemas.ts`, helper validado `src/lib/profile.ts`, datos reales bilingües del CV en `content/data/{socials,skills-matrix,experience}.ts` y validador CI `pnpm validate:content` en `scripts/validate-content.mjs`)
   - **Infraestructura CI y Vercel**: `.github/workflows/ci.yml` (`validate:content` + `typecheck` + `lint` + `build`), `vercel.json`, `src/app/sitemap.ts` dinámico y despliegue verificado en `https://devfolio-core.vercel.app/` (`READY`)
-- **Próximas Fases del Roadmap (Stack base v1.0 completo; pendientes de ejecución controlada por compuertas)**:
-  - **Fase 3 (`DF-GATE-03` — `READY_TO_START`)**: diseño y construcción de secciones UI/catálogo/detalle sobre paleta Cobalt `#233A8E` / Cyan `#1DA4DF` (sin logo gráfico) y auditoría `/ui-audit`.
-  - **Fase 4 (`DF-GATE-04` — `LOCKED`)**: ingesta de 3 a 5 proyectos reales vía `/add-project` reemplazando el fixture temporal.
+- **Próximas Fases del Roadmap (Stack e interfaz v1.0 completos; pendientes de ejecución controlada por compuertas)**:
+  - **Fase 4 (`DF-GATE-04` — `READY_TO_START`)**: ingesta de 3 a 5 proyectos reales (`MinaMarcación`, `Rent_App`, `Inventory Management System`) vía `/add-project` reemplazando el fixture temporal `sample-architecture.mdx`.
   - **Fase 5 (`DF-GATE-05` — `LOCKED`)**: auditoría `/pre-deploy`, OpenGraph bilingüe, CVs en PDF y lanzamiento en producción.
 
 ### 1.2 Arquitectura en 3 Módulos Independientes
-- **Módulo A — Gobernanza e Inteligencia (`.agents/` y `docs/`)**:
-  - Punto de entrada `AGENTS.md`, contrato `docs/SCOPE.md`, estado canónico `docs/00-governance/{project-state,gates-registry,decision-log}.md`, bitácora `docs/references.md`, reglas `.agents/rules/*.md` y skills en nivel 1 `.agents/skills/*/SKILL.md`.
+- **Módulo A — Gobernanza, Diseño e Inteligencia (`.agents/`, `.stitch/` y `docs/`)**:
+  - Punto de entrada `AGENTS.md`, contrato `docs/SCOPE.md`, estado canónico `docs/00-governance/{project-state,gates-registry,decision-log}.md`, bitácora `docs/references.md`, sistema de diseño `.stitch/{DESIGN.md,metadata.json,designs/}`, reglas `.agents/rules/*.md` y skills en nivel 1 `.agents/skills/*/SKILL.md`.
 - **Módulo B — Contenido y Localización (`content/` y `messages/`)**:
   - Casos de estudio MDX (`content/projects/es/` y `content/projects/en/`), datos estructurados (`content/data/`) y diccionarios de interfaz (`messages/es.json` y `messages/en.json`).
 - **Módulo C — Aplicación y Activos (`src/` y `public/`)**:

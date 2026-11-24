@@ -1,0 +1,100 @@
+{
+  "projectId": "1853127612835409612",
+  "projectResource": "projects/1853127612835409612",
+  "projectUrl": "https://stitch.withgoogle.com/projects/1853127612835409612",
+  "title": "DevFolio Core V1 — Cruzmar Sosa",
+  "phase": "Fase 3A — Design System & Stitch Visual Architecture",
+  "updatedAt": "2026-11-24",
+  "designSystem": {
+    "assetId": "16178561621044783783",
+    "resource": "assets/16178561621044783783",
+    "displayName": "DevFolio Core V1 — Precision Engineering (Cobalt & Cyan)",
+    "defaultColorMode": "DARK",
+    "brandColors": {
+      "cobalt": "#233A8E",
+      "cobaltDarkAction": "#3B63D6",
+      "cyan": "#1DA4DF",
+      "cyanLightAccessibleText": "#0369A1"
+    },
+    "typography": {
+      "headlineFont": "GEIST",
+      "bodyFont": "GEIST",
+      "monoFont": "Geist Mono / JetBrains Mono"
+    },
+    "roundness": "ROUND_EIGHT",
+    "designMdPath": ".stitch/DESIGN.md"
+  },
+  "screens": [
+    {
+      "key": "home-desktop",
+      "label": "Home Desktop (Dark Default · 1440x900)",
+      "screenId": "e0122a04815b4489ada29dc925a9f823",
+      "resource": "projects/1853127612835409612/screens/e0122a04815b4489ada29dc925a9f823",
+      "deviceType": "DESKTOP",
+      "themeMode": "DARK",
+      "route": "/[locale]",
+      "stitchUrl": "https://stitch.withgoogle.com/projects/1853127612835409612",
+      "localFiles": {
+        "html": ".stitch/designs/home-desktop.html",
+        "screenshot": ".stitch/designs/home-desktop.png"
+      }
+    },
+    {
+      "key": "home-mobile",
+      "label": "Home Mobile (Dark Default · 390x844)",
+      "screenId": "ee66c212f7584cb09605bbaca443a222",
+      "resource": "projects/1853127612835409612/screens/ee66c212f7584cb09605bbaca443a222",
+      "deviceType": "MOBILE",
+      "themeMode": "DARK",
+      "route": "/[locale]",
+      "stitchUrl": "https://stitch.withgoogle.com/projects/1853127612835409612",
+      "localFiles": {
+        "html": ".stitch/designs/home-mobile.html",
+        "screenshot": ".stitch/designs/home-mobile.png"
+      }
+    },
+    {
+      "key": "projects-catalog-desktop",
+      "label": "Projects Catalog Desktop (/projects · 1440x900)",
+      "screenId": "015a31b77561471c98d91aa64e16e92f",
+      "resource": "projects/1853127612835409612/screens/015a31b77561471c98d91aa64e16e92f",
+      "deviceType": "DESKTOP",
+      "themeMode": "DARK",
+      "route": "/[locale]/projects",
+      "stitchUrl": "https://stitch.withgoogle.com/projects/1853127612835409612",
+      "localFiles": {
+        "html": ".stitch/designs/projects-catalog-desktop.html",
+        "screenshot": ".stitch/designs/projects-catalog-desktop.png"
+      }
+    },
+    {
+      "key": "project-case-study-desktop",
+      "label": "Project Case Study Desktop (/projects/sample-architecture · 1440x900)",
+      "screenId": "b8723f7b606c42098c1d869ed0b64246",
+      "resource": "projects/1853127612835409612/screens/b8723f7b606c42098c1d869ed0b64246",
+      "deviceType": "DESKTOP",
+      "themeMode": "DARK",
+      "route": "/[locale]/projects/[slug]",
+      "stitchUrl": "https://stitch.withgoogle.com/projects/1853127612835409612",
+      "localFiles": {
+        "html": ".stitch/designs/project-case-study-desktop.html",
+        "screenshot": ".stitch/designs/project-case-study-desktop.png"
+      }
+    },
+    {
+      "key": "home-desktop-light",
+      "label": "Home Desktop Light Mode Parity Variant (1440x900)",
+      "screenId": "5b5c2c504b8c4bc78e237cad03ac0ea8",
+      "resource": "projects/1853127612835409612/screens/5b5c2c504b8c4bc78e237cad03ac0ea8",
+      "deviceType": "DESKTOP",
+      "themeMode": "LIGHT",
+      "variantOf": "e0122a04815b4489ada29dc925a9f823",
+      "route": "/[locale]",
+      "stitchUrl": "https://stitch.withgoogle.com/projects/1853127612835409612",
+      "localFiles": {
+        "html": ".stitch/designs/home-desktop-light.html",
+        "screenshot": ".stitch/designs/home-desktop-light.png"
+      }
+    }
+  ]
+}
