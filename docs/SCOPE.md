@@ -4,9 +4,9 @@
 
 - **Proyecto**: `devfolio-core`
 - **Versión objetivo**: `v1.0` (Listo para postulaciones y despliegue en Vercel)
-- **Fase activa**: `Fase 3 — Interfaz y Secciones (Completada · DF-GATE-03 APPROVED; Fase 4 READY_TO_START)`
-- **Rama actual**: `feat/phase-3-ui-design`
-- **Stack bloqueado**: Next.js 16 (App Router) · React 19 · TypeScript estricto · Tailwind CSS v4 · shadcn/ui · `next-intl` · MDX · Zod · `pnpm` · Vercel
+- **Fase activa**: `Fase 3C / Bloque B — Motion Design, Microinteracciones y Escena 3D Hero (DF-D20 · Listo para QA del usuario; DF-GATE-03 APPROVED previo en DF-D18; DF-GATE-04 READY_TO_START)`
+- **Rama actual**: `feat/phase-3c-motion-3d`
+- **Stack bloqueado**: Next.js 16 (App Router) · React 19 · TypeScript estricto · Tailwind CSS v4 · shadcn/ui · `next-intl` · MDX · Zod · `pnpm` · Vercel · `motion` · `three` · `@react-three/fiber` v9 *(incorporación acotada por `DF-D19`/`DF-D20`, sin `@react-three/drei`, estrictamente limitada a 1 escena 3D Hero con fallback SVG/CSS)*
 
 ---
 
@@ -19,8 +19,8 @@ Todo lo listado en **Fuera de alcance (v2.0)** permanece congelado hasta que `v1
 | **Stack** | Next.js App Router + TypeScript estricto + Tailwind CSS + shadcn/ui + `next-intl` + MDX + Zod + `pnpm`. | CMS externos (Sanity, Strapi), bases de datos SQL/NoSQL, paneles admin o backends custom. |
 | **Idiomas** | Español (`es`) e Inglés (`en`) con paridad 100% en UI, contenido MDX, metadatos y descarga de CV por idioma. | Tercer idioma o traducciones automáticas en tiempo de ejecución. |
 | **Vistas** | Home (Hero, 3–5 Proyectos Destacados, Stack, Experiencia + CV, Contacto), `/[locale]/projects` con filtro por tecnología y `/[locale]/projects/[slug]`. | Blog técnico completo, comentarios, newsletter o buscador full-text complejo. |
-| **Diseño y rendimiento** | Mobile-first, modo claro/oscuro, accesible (WCAG AA), animaciones sutiles respetando `prefers-reduced-motion` y Lighthouse ≥ 95. | Escenas 3D pesadas (Three.js/WebGL), cursores custom o animaciones que degraden móvil. |
-| **Automatización IA** | `.agents/` con reglas globales, `skill-master-orchestrator`, `project-workflow-governor`, 5 skills especializadas, `docs/00-governance/` y skills ejecutables `/add-project`, `/ui-audit` y `/pre-deploy`. | Agentes autónomos haciendo push directo a `main` sin revisión humana. |
+| **Diseño y rendimiento** | Mobile-first, modo claro/oscuro, accesible (WCAG AA), animaciones sutiles respetando `prefers-reduced-motion` y presupuesto de rendimiento medido contra línea base. **Enmienda controlada `DF-D19`**: se habilita evaluar en Bloque B el uso potencial de `motion/react` y una **única** pieza 3D arquitectónica en el Hero (`< 10.000` triángulos, límites explícitos de draw calls y memoria GPU definidos en Bloque B, DPR adaptativo, carga diferida, pausa fuera de vista/pestaña oculta, fallback SVG/CSS funcional, sin bloquear scroll/touch y sin postprocesamiento costoso), condicionada a demostrar utilidad visual y viabilidad técnica. | Escenas 3D pesadas o adicionales (prohibida más de 1 pieza 3D en v1.0), postprocesamiento WebGL costoso, cursores custom o animaciones que degraden móvil. |
+| **Automatización IA** | `.agents/` con reglas globales, `skill-master-orchestrator`, `project-workflow-governor`, `docs/00-governance/`, `32` skills en nivel 1 (`10` internas + `22` externas curadas, incluidas las 6 incorporadas por `DF-D19`) y slash commands `/add-project`, `/ui-audit` y `/pre-deploy`. | Agentes autónomos haciendo push directo a `main` sin revisión humana. |
 
 ---
 
@@ -34,6 +34,7 @@ No se avanza de fase sin cumplir el criterio de cierre verificable de la fase ac
 | **Fase 1 — Base Técnica y Despliegue Cero** | **Completada (`DF-GATE-01 APPROVED`)** | Configurar `next-intl` (`es`/`en`), `src/proxy.ts`, tema claro/oscuro, shadcn/ui base, CI en GitHub Actions, `vercel.json` y primer deploy limpio a Vercel. | Preview URL de Vercel operativa cambiando `/es` ↔ `/en` y tema claro/oscuro sin errores de hidratación ni build. |
 | **Fase 2 — Motor de Contenido** | **Completada (`DF-GATE-02 APPROVED`)** | Esquema Zod para proyectos MDX, lector tipado `src/lib/projects.ts`, validador de paridad ES/EN y datos tipados (`experience.ts`, `skills-matrix.ts`, `socials.ts`). | Carga validada de al menos 1 proyecto fixture en `es` y `en` + fallo explícito si falta un campo o idioma. |
 | **Fase 3 — Interfaz y Secciones** | **Completada (`DF-GATE-03 APPROVED`)** | Construir Navbar, LanguageSwitcher, ThemeToggle, Footer, Hero, FeaturedProjects, TechStack, Experience + CV, Contact, `/projects` con filtro y `/projects/[slug]`. | Revisión `/ui-audit` aprobada en móvil (375px) y escritorio (1440px), contraste WCAG AA y cero texto hardcodeado. |
+| **Fase 3C — Estabilización, Motion y 3D Hero (`DF-D19`/`DF-D20`)** | **Bloque A commiteado · Bloque B listo para QA del usuario** | Resolver defectos de producción (Bloque A) e implementar microinteracciones con `motion/react` + 1 única escena 3D arquitectónica diferida en el Hero con fallback SVG/CSS y presupuesto GPU verificado (Bloque B). | 5 validaciones en verde (`legacy-scan 0`, `validate:content`, `typecheck`, `lint`, `build`), `680` triángulos / `6` draw calls, pausa off-viewport/tab oculta, fallback móvil/reduced-motion/no-WebGL verificado en Chromium/CDP y QA manual del usuario (incluyendo Safari iOS real). |
 | **Fase 4 — Ingesta de Proyectos Reales** | **Lista (`READY_TO_START`)** | Documentar 3 a 5 proyectos estrella mediante `/add-project` con casos de estudio ES/EN, capturas WebP/AVIF, demos y repositorios. | 3–5 proyectos reales publicados con paridad total ES/EN e imágenes optimizadas sin links rotos. |
 | **Fase 5 — Auditoría QA, SEO y Lanzamiento** | Pendiente | Ejecutar `/pre-deploy`, validar OpenGraph ES/EN (LinkedIn/CV), `sitemap.ts`, `robots.ts`, CVs en PDF (`public/cv/`) y conectar dominio de producción. | Lighthouse ≥ 95, OpenGraph validado en ES y EN, CVs descargables y despliegue en producción verificado. |
 

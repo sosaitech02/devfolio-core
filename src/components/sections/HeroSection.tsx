@@ -7,6 +7,7 @@ import {
   Server,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { HeroSceneClient } from "@/components/sections/HeroSceneClient";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -67,10 +68,15 @@ export async function HeroSection({ locale }: HeroSectionProps) {
           </p>
 
           <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap sm:items-center">
-            <Button asChild variant="default" size="lg" className="w-full sm:w-auto">
+            <Button
+              asChild
+              variant="default"
+              size="lg"
+              className="cta-arrow-group w-full sm:w-auto"
+            >
               <Link href="/projects" prefetch={true} transitionTypes={["nav-forward"]}>
                 <span>{t("primaryCta")}</span>
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </Link>
             </Button>
 
@@ -129,6 +135,8 @@ export async function HeroSection({ locale }: HeroSectionProps) {
           </CardHeader>
 
           <CardContent className="flex flex-col gap-5 pt-5">
+            <HeroSceneClient />
+
             <ul className="flex flex-col gap-3.5" aria-label={t("pillarsHeading")}>
               {pillars.map((pillar) => (
                 <li key={pillar.title} className="flex items-start gap-2.5">

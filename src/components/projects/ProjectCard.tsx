@@ -214,7 +214,12 @@ export function ProjectCard({
           </ul>
 
           <div className="mt-auto flex flex-wrap items-center gap-2.5 pt-2">
-            <Button asChild variant="default" size="sm">
+            <Button
+              asChild
+              variant="default"
+              size="sm"
+              className="cta-arrow-group"
+            >
               <Link
                 href={`/projects/${project.slug}`}
                 prefetch={true}
@@ -222,7 +227,7 @@ export function ProjectCard({
               >
                 <span>{labels.readCaseStudy}</span>
                 <ArrowRight
-                  className="size-3.5 transition-transform duration-150 motion-safe:group-hover:translate-x-0.5"
+                  className="cta-arrow size-3.5"
                   aria-hidden="true"
                 />
               </Link>

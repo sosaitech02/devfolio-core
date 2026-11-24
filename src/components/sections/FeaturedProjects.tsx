@@ -4,6 +4,8 @@ import {
   ProjectCard,
   type ProjectCardLabels,
 } from "@/components/projects/ProjectCard";
+import { ProjectCardMotion } from "@/components/projects/ProjectCardMotion";
+import { MotionReveal } from "@/components/ui/MotionReveal";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getFeaturedProjects } from "@/lib/projects";
@@ -52,31 +54,38 @@ export async function FeaturedProjects({ locale }: FeaturedProjectsProps) {
             href="/projects"
             prefetch={true}
             transitionTypes={["nav-forward"]}
-            className="inline-flex w-fit items-center gap-1.5 text-sm font-medium text-primary-link underline-offset-4 hover:underline"
+            className="cta-arrow-group inline-flex w-fit items-center gap-1.5 text-sm font-medium text-primary-link underline-offset-4 hover:underline"
           >
             <span>{t("viewCatalog")}</span>
-            <ArrowRight className="size-4" aria-hidden="true" />
+            <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
           </Link>
         </div>
 
         <div className="flex flex-col gap-6">
           {flagship ? (
-            <ProjectCard
-              project={flagship}
-              labels={cardLabels}
-              featuredLayout="flagship"
-            />
+            <MotionReveal delay={0}>
+              <ProjectCardMotion>
+                <ProjectCard
+                  project={flagship}
+                  labels={cardLabels}
+                  featuredLayout="flagship"
+                />
+              </ProjectCardMotion>
+            </MotionReveal>
           ) : null}
 
           {supporting.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {supporting.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  project={project}
-                  labels={cardLabels}
-                  featuredLayout="standard"
-                />
+              {supporting.map((project, index) => (
+                <MotionReveal key={project.slug} delay={(index + 1) * 0.05}>
+                  <ProjectCardMotion>
+                    <ProjectCard
+                      project={project}
+                      labels={cardLabels}
+                      featuredLayout="standard"
+                    />
+                  </ProjectCardMotion>
+                </MotionReveal>
               ))}
             </div>
           ) : null}

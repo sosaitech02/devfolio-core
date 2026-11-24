@@ -1,8 +1,10 @@
 import { Briefcase, Download, GraduationCap } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { ExperienceTimelineRail } from "@/components/sections/ExperienceTimelineRail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { MotionReveal } from "@/components/ui/MotionReveal";
 import type { AppLocale } from "@/i18n/routing";
 import {
   formatYearMonth,
@@ -35,85 +37,89 @@ export async function ExperienceSection({ locale }: ExperienceSectionProps) {
           </p>
         </div>
 
-        <ol className="flex flex-col gap-5">
-          {profileExperience.map((entry) => {
-            const isEducation = entry.type === "education";
-            const Icon = isEducation ? GraduationCap : Briefcase;
-            const startFormatted = formatYearMonth(entry.startDate, locale);
-            const endFormatted = entry.endDate
-              ? formatYearMonth(entry.endDate, locale)
-              : t("present");
+        <ExperienceTimelineRail>
+          <ol className="flex flex-col gap-5">
+            {profileExperience.map((entry, index) => {
+              const isEducation = entry.type === "education";
+              const Icon = isEducation ? GraduationCap : Briefcase;
+              const startFormatted = formatYearMonth(entry.startDate, locale);
+              const endFormatted = entry.endDate
+                ? formatYearMonth(entry.endDate, locale)
+                : t("present");
 
-            return (
-              <li key={entry.id}>
-                <Card>
-                  <CardContent className="grid grid-cols-1 gap-5 p-5 sm:p-6 lg:grid-cols-12 lg:gap-8">
-                    <div className="flex flex-col gap-2 lg:col-span-3">
-                      <span className="font-mono text-xs font-semibold uppercase tracking-wide text-accent-foreground tabular-nums">
-                        {startFormatted} — {endFormatted}
-                      </span>
-                      <Badge
-                        variant={isEducation ? "secondary" : "outline"}
-                        className="w-fit font-mono text-[11px]"
-                      >
-                        <Icon className="size-3" aria-hidden="true" />
-                        <span>
-                          {isEducation ? t("typeEducation") : t("typeWork")}
-                        </span>
-                      </Badge>
-                      <span className="text-xs text-subtle-foreground">
-                        {entry.location[locale]}
-                      </span>
-                    </div>
+              return (
+                <li key={entry.id}>
+                  <MotionReveal delay={index * 0.05}>
+                    <Card>
+                      <CardContent className="grid grid-cols-1 gap-5 p-5 sm:p-6 lg:grid-cols-12 lg:gap-8">
+                        <div className="flex flex-col gap-2 lg:col-span-3">
+                          <span className="font-mono text-xs font-semibold uppercase tracking-wide text-accent-foreground tabular-nums">
+                            {startFormatted} — {endFormatted}
+                          </span>
+                          <Badge
+                            variant={isEducation ? "secondary" : "outline"}
+                            className="w-fit font-mono text-[11px]"
+                          >
+                            <Icon className="size-3" aria-hidden="true" />
+                            <span>
+                              {isEducation ? t("typeEducation") : t("typeWork")}
+                            </span>
+                          </Badge>
+                          <span className="text-xs text-subtle-foreground">
+                            {entry.location[locale]}
+                          </span>
+                        </div>
 
-                    <div className="flex min-w-0 flex-col gap-3 lg:col-span-9">
-                      <div className="flex flex-col gap-0.5">
-                        <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                          {entry.role[locale]}
-                        </h3>
-                        <p className="text-sm font-medium text-primary-link">
-                          {entry.organization}
-                        </p>
-                      </div>
+                        <div className="flex min-w-0 flex-col gap-3 lg:col-span-9">
+                          <div className="flex flex-col gap-0.5">
+                            <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                              {entry.role[locale]}
+                            </h3>
+                            <p className="text-sm font-medium text-primary-link">
+                              {entry.organization}
+                            </p>
+                          </div>
 
-                      <p className="max-w-[68ch] text-sm leading-relaxed text-muted-foreground">
-                        {entry.summary[locale]}
-                      </p>
+                          <p className="max-w-[68ch] text-sm leading-relaxed text-muted-foreground">
+                            {entry.summary[locale]}
+                          </p>
 
-                      <ul className="flex flex-col gap-2 text-sm leading-relaxed text-foreground">
-                        {entry.highlights[locale].map((point) => (
-                          <li key={point} className="flex items-start gap-2.5">
-                            <span
-                              className="mt-2 size-1.5 shrink-0 rounded-full bg-accent-decorative"
-                              aria-hidden="true"
-                            />
-                            <span>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
+                          <ul className="flex flex-col gap-2 text-sm leading-relaxed text-foreground">
+                            {entry.highlights[locale].map((point) => (
+                              <li key={point} className="flex items-start gap-2.5">
+                                <span
+                                  className="mt-2 size-1.5 shrink-0 rounded-full bg-accent-decorative"
+                                  aria-hidden="true"
+                                />
+                                <span>{point}</span>
+                              </li>
+                            ))}
+                          </ul>
 
-                      {entry.stack.length > 0 ? (
-                        <ul className="flex flex-wrap gap-1.5 pt-1">
-                          {entry.stack.map((tech) => (
-                            <li key={tech}>
-                              <Badge
-                                variant="secondary"
-                                translate="no"
-                                className="font-mono text-[11px]"
-                              >
-                                {tech}
-                              </Badge>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </div>
-                  </CardContent>
-                </Card>
-              </li>
-            );
-          })}
-        </ol>
+                          {entry.stack.length > 0 ? (
+                            <ul className="flex flex-wrap gap-1.5 pt-1">
+                              {entry.stack.map((tech) => (
+                                <li key={tech}>
+                                  <Badge
+                                    variant="secondary"
+                                    translate="no"
+                                    className="font-mono text-[11px]"
+                                  >
+                                    {tech}
+                                  </Badge>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </MotionReveal>
+                </li>
+              );
+            })}
+          </ol>
+        </ExperienceTimelineRail>
 
         <Card className="bg-surface-elevated/60">
           <CardContent className="flex flex-col justify-between gap-4 p-5 sm:p-6 md:flex-row md:items-center">

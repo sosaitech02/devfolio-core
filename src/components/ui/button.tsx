@@ -4,20 +4,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "touch-target inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[background-color,border-color,color,transform] duration-150 motion-safe:active:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "touch-target inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[background-color,border-color,color,transform] duration-150 ease-[var(--ease-out)] focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ring motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground border border-transparent hover:bg-primary-hover",
+          "bg-primary text-primary-foreground border border-transparent hover:bg-primary-hover active:bg-primary-active",
         destructive:
-          "bg-destructive text-destructive-foreground border border-transparent hover:opacity-90",
+          "bg-destructive text-destructive-foreground border border-transparent hover:opacity-90 active:opacity-85",
         outline:
-          "border border-border bg-card text-foreground hover:border-accent-foreground/50 hover:bg-surface-elevated",
+          "border border-border bg-card text-foreground hover:border-accent-foreground/50 hover:bg-surface-elevated active:bg-surface-subtle",
         secondary:
-          "border border-border bg-surface-elevated text-foreground hover:bg-surface-subtle",
+          "border border-border bg-surface-elevated text-foreground hover:bg-surface-subtle active:bg-border",
         ghost:
-          "border border-transparent text-foreground hover:bg-surface-elevated",
+          "border border-transparent text-foreground hover:bg-surface-elevated active:bg-surface-subtle",
         link: "border border-transparent text-primary-link underline-offset-4 hover:underline",
       },
       size: {
