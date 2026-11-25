@@ -47,7 +47,7 @@ Registro canónico de criterios verificables de apertura y cierre para las compu
   3. Ejecución de `/ui-audit` aprobada en móvil y escritorio, paridad claro/oscuro y contraste WCAG 2.2 AA verificados.
 
 ### `DF-GATE-04` — Fase 4: Ingesta de Proyectos Reales
-- **Estado actual**: `READY_TO_START` *(desbloqueada tras `DF-GATE-03 = APPROVED` en `DF-D18`; lista para ingestar los proyectos reales MinaMarcación, Rent_App e Inventory Management System mediante `/add-project`)*
+- **Estado actual**: `IN_PROGRESS` *(iniciada en `feat/phase-4-real-projects` bajo `DF-D21`: Proyecto #1 `etours-leon` extraído en solo lectura, publicado en `content/projects/{es,en}/etours-leon.mdx` con 5 capturas WebP 16:9 inspeccionadas visualmente en `public/images/projects/etours-leon/`, soporte de repositorios privados + galería MDX activado y fixture `sample-architecture.mdx` eliminado; pendientes los demás proyectos estrella y CVs en PDF antes de solicitar cierre de `DF-GATE-04`)*
 - **Criterio de apertura**: `DF-GATE-03 = APPROVED`.
 - **Criterios verificables de cierre**:
   1. De 3 a 5 proyectos estrella reales ingresados vía `/add-project` con paridad total en `content/projects/{es,en}/`.

@@ -1,4 +1,22 @@
+import { isValidElement, type ImgHTMLAttributes } from "react";
 import type { MDXComponents } from "mdx/types";
+
+function MdxImage({
+  alt = "",
+  className,
+  ...props
+}: ImgHTMLAttributes<HTMLImageElement>) {
+  return (
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      className={`block h-auto w-full object-cover ${className ?? ""}`}
+      {...props}
+    />
+  );
+}
 
 export const mdxComponents: MDXComponents = {
   h2: ({ children, ...props }) => (
@@ -17,14 +35,34 @@ export const mdxComponents: MDXComponents = {
       {children}
     </h3>
   ),
-  p: ({ children, ...props }) => (
-    <p
-      className="mt-4 max-w-[68ch] text-sm leading-7 text-muted-foreground sm:text-base"
-      {...props}
-    >
-      {children}
-    </p>
-  ),
+  p: ({ children, ...props }) => {
+    if (
+      isValidElement<{ alt?: string; title?: string }>(children) &&
+      (children.type === MdxImage || children.type === "img")
+    ) {
+      const caption = children.props.title ?? children.props.alt;
+      return (
+        <figure className="my-6 overflow-hidden rounded-xl border border-border bg-surface-elevated">
+          {children}
+          {caption ? (
+            <figcaption className="border-t border-border bg-card px-4 py-2.5 text-xs leading-relaxed text-subtle-foreground">
+              {caption}
+            </figcaption>
+          ) : null}
+        </figure>
+      );
+    }
+
+    return (
+      <p
+        className="mt-4 max-w-[68ch] text-sm leading-7 text-muted-foreground sm:text-base"
+        {...props}
+      >
+        {children}
+      </p>
+    );
+  },
+  img: MdxImage,
   ul: ({ children, ...props }) => (
     <ul
       className="mt-4 max-w-[68ch] list-disc space-y-2 pl-5 text-sm leading-7 text-muted-foreground sm:text-base"
@@ -89,7 +127,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <code
         translate="no"
-        className="rounded-md border border-border bg-surface-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-foreground"
+        className="rounded-md border border-border bg-surface-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-foreground [overflow-wrap:anywhere]"
         {...props}
       >
         {children}
@@ -98,7 +136,7 @@ export const mdxComponents: MDXComponents = {
   },
   pre: ({ children, ...props }) => (
     <pre
-      className="my-6 overflow-x-auto rounded-xl border border-border bg-surface-elevated p-4 font-mono text-xs leading-6 text-foreground sm:text-sm"
+      className="my-6 max-w-full overflow-x-auto rounded-xl border border-border bg-surface-elevated p-4 font-mono text-xs leading-6 text-foreground sm:text-sm"
       {...props}
     >
       {children}

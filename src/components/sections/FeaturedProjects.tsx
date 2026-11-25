@@ -24,6 +24,7 @@ export async function FeaturedProjects({ locale }: FeaturedProjectsProps) {
     stackLabel: t("stackLabel"),
     readCaseStudy: t("readCaseStudy"),
     repository: t("repository"),
+    privateRepository: t("privateRepository"),
     demo: t("demo"),
     statusPublished: t("statusPublished"),
     statusInProgress: t("statusInProgress"),

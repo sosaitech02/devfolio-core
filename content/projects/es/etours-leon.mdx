@@ -1,0 +1,141 @@
+---
+slug: "etours-leon"
+title: "EtoursLeon — Plataforma Full-Stack de Alquiler de E-Bikes y Turismo Inteligente"
+summary: "Plataforma integral de micromovilidad eléctrica para León, Nicaragua: panel operativo y explorador web Next.js 16, API/WebSockets NestJS 11 + Prisma 7 y app móvil Expo con telemetría GPS offline-first."
+problem: "Operar una flota turística de bicicletas eléctricas exige evitar reservas duplicadas y cobros inconsistentes bajo concurrencia, curar rutas viales con puntos de interés confiables y sostener el rastreo GPS en tiempo real incluso cuando los dispositivos móviles pierden conectividad o Redis no está disponible."
+role: "Arquitecto de Software y Desarrollador Full Stack"
+date: "2026-04"
+featured: true
+order: 1
+status: "published"
+stack:
+  - "Next.js 16"
+  - "React 19"
+  - "TypeScript"
+  - "NestJS"
+  - "Prisma"
+  - "PostgreSQL"
+  - "Socket.IO"
+  - "Redis"
+  - "Leaflet"
+  - "Expo"
+  - "Supabase Storage"
+repoUrl: "https://github.com/Cruzmar-Sosa/RENTAL_APP"
+repoVisibility: "public"
+coverImage: "/images/projects/etours-leon/cover.webp"
+coverAlt: "Panel de monitoreo en tiempo real de EtoursLeon con mapa Leaflet de León, conexión Socket.IO activa y rutas turísticas sugeridas"
+highlights:
+  - "Transacciones ACID con bloqueo pesimista (SELECT FOR UPDATE) para reservas, check-in por PIN y liquidación financiera idempotente"
+  - "Telemetría GPS en tiempo real vía Socket.IO con deduplicación por frameId, throttling de escritura y fallback automático en memoria cuando Redis no está disponible"
+  - "App móvil Expo con arquitectura limpia, cola offline persistida en SQLite y política adaptativa de muestreo según batería y movimiento"
+  - "Editor interactivo de rutas y POIs en Leaflet con cascada OpenRouteService → OSRM → línea recta y optimización Nearest Neighbor + 2-opt"
+  - "RBAC granular por módulo y acción (8 módulos × 5 acciones) más carga de medios en Supabase Storage procesados con Sharp"
+---
+
+## 1. Resumen ejecutivo y problemática de negocio
+
+**EtoursLeon** es un ecosistema full-stack diseñado para digitalizar la operación de alquiler de bicicletas eléctricas y recorridos turísticos guiados en León, Nicaragua. A diferencia de un catálogo simple de reservas, el dominio combina cuatro retos simultáneos:
+
+1. **Integridad operativa y financiera bajo concurrencia**: dos operadores o usuarios no pueden reservar, desbloquear ni liquidar la misma bicicleta eléctrica al mismo tiempo; tampoco debe alquilarse una unidad en mantenimiento o con batería crítica (`< 20 %`).
+2. **Rastreo GPS continuo en redes móviles inestables**: la telemetría enviada desde dispositivos en ruta debe evitar tramas duplicadas, proteger la base de datos de picos de escritura y continuar funcionando tanto si el teléfono pierde señal como si una instancia Redis externa cae o no está configurada.
+3. **Curaduría geoespacial de rutas turísticas**: los administradores necesitan diseñar recorridos calle a calle con Puntos de Interés (POIs) ordenados, audioguías y galerías, ofreciendo al turista un mapa interactivo con distancias y duraciones realistas.
+4. **Control operativo y trazabilidad auditable**: cada transición de estado de una bicicleta, una reserva o un pago requiere control de permisos granular y registro histórico verificable.
+
+---
+
+## 2. Arquitectura de la solución
+
+El sistema se estructuró como un monorepo TypeScript dividido en tres superficies desacopladas que comparten contratos de dominio claros:
+
+| Capa | Ubicación y stack principal | Responsabilidades verificadas |
+| :--- | :--- | :--- |
+| **Backend API & Realtime** | `backend/` · NestJS 11, Prisma 7 (`@prisma/adapter-pg`), PostgreSQL, `ioredis`, Socket.IO 4.8, Supabase Storage + `sharp` | Máquina de estados de reservas, bloqueos `FOR UPDATE`, liquidación financiera ACID, RBAC granular, motor de rutas/optimización y gateway WebSocket `/tracking`. |
+| **Web Operativa y Explorador** | `frontend/` · Next.js 16 (App Router), React 19, Tailwind CSS v4, TanStack Query v5, Zustand v5, React-Leaflet, `socket.io-client` | Panel administrativo (`dashboard`, `bikes`, `reservations`, `payments`, `routes`, `stations`, `tracking`, `users`, `permissions`), constructor de rutas, portal turístico (`/explore`, `/catalog`) y exportación Excel/PDF. |
+| **App Móvil Turista / Rider** | `mobile/` · Expo 54, React Native 0.81, `expo-router`, `expo-location`, `expo-sqlite`, `expo-secure-store`, Clean Architecture | Autenticación con almacenamiento seguro, reservas y viaje activo, máquina de estados de rastreo (`TrackingStateMachine`), muestreo adaptativo por batería y cola offline en SQLite. |
+
+```text
+  [ Next.js 16 Admin & Explorer ]      [ Expo Mobile App (Clean Arch) ]
+      (Leaflet · Query · WS)            (GPS · AdaptivePolicy · SQLite)
+                 \                                    /
+                  \--- HTTPS REST + Socket.IO (/tracking) ---/
+                                      |
+                         [ NestJS 11 Modular API ]
+          +-----------------+-------------------+-------------------+
+          |                 |                   |                   |
+   Reservations &     TrackingGateway     RoutesService       RBAC & Media
+   Settlement ACID    (dedup/session)   (ORS -> OSRM -> SL)   (Sharp/Supabase)
+          |                 |                   |                   |
+    [ PostgreSQL / Prisma 7 ]     [ Redis / In-Memory Fallback ]   [ Supabase Storage ]
+```
+
+---
+
+## 3. Decisiones técnicas clave y compromisos
+
+### Concurrencia transaccional y modelo dual de flota
+
+Para eliminar inconsistencias entre el estado comercial y la salud mecánica de cada unidad, el modelo `Bike` en Prisma desacopla explícitamente **`BikeOperationalStatus`** (`AVAILABLE`, `RESERVED`, `CHECKED_IN`, `IN_USE`) de **`BikeTechnicalStatus`** (`OK`, `MAINTENANCE`, `OUT_OF_SERVICE`).
+
+- **Bloqueos pesimistas en transacciones ACID**: tanto `ReservationsService.create` y `checkIn` como `SettlementOrchestratorService.settleReservation` ejecutan `SELECT ... FOR UPDATE` sobre `Bike` y `Reservation` dentro de `prisma.$transaction`, validando batería mínima (`>= 20 %`), ausencia de otra sesión activa y transiciones legales en la máquina formal de 9 estados (`ReservationLifecycleService`).
+- **Cierre financiero idempotente**: `SettlementOrchestratorService` centraliza en el servidor el cálculo de horas reales, cargos por exceso de tiempo e incidentes (`IncidentFinancialService`), genera registros append-only en `Payment` (`UPFRONT`, `DEPOSIT`, `BALANCE`, `REFUND`), aplica protección por `settlementReference` único y guarda eventos inmutables en `ReservationEvent`, `PaymentEvent` y `BikeEvent`.
+- **Compromiso aceptado**: los bloqueos por fila incrementan levemente la contención sobre una misma bicicleta en el instante de check-in o liquidación, pero garantizan consistencia financiera estricta sin depender de compensaciones asíncronas complejas.
+
+### Telemetría GPS resiliente y fallback automático de Redis
+
+El gateway Socket.IO (`/tracking`) coordina la presencia en vivo de la flota hacia el room `fleet_dashboard` aplicando cinco defensas encadenadas:
+
+1. **Normalización y validación geográfica** de coordenadas (`lat`/`lng` y `latitude`/`longitude`, límites `[-90, 90]` / `[-180, 180]`).
+2. **Deduplicación idempotente por `frameId`** con `Redis SET NX EX 60` y restricción `unique` en `BikeLocation.frameId`, descartando reintentos móviles repetidos.
+3. **Bloqueo de sesión por bicicleta con ventana de gracia de 5 segundos**: impide que dos dispositivos emitan telemetría simultánea para la misma unidad y evita liberar el bloqueo ante microcortes de señal celular.
+4. **Throttling de persistencia a base de datos (máximo 1 escritura cada 3 segundos por bicicleta)** manteniendo el broadcast en tiempo real al tablero.
+5. **Degradación elegante en `RedisService`**: si `REDIS_URL` no está configurado o se agotan los 3 reintentos de conexión, el servicio conmuta automáticamente a estructuras `Map`/`Set` en memoria (con límite de 10.000 entradas en caché de deduplicación). Esto permite ejecutar y probar la plataforma sin infraestructura adicional, manteniendo compatibilidad directa con Redis para escalado horizontal.
+
+### Telemetría móvil offline-first (Expo + SQLite)
+
+En `mobile/src/platform/`, el cliente móvil implementa **Clean Architecture** separando contratos (`ITrackingEngine`, `IOfflineQueue`, `ITrackingPolicy`) de las implementaciones nativas:
+
+- **`TrackingStateMachine`** (`IDLE` → `ACTIVE` → `PAUSED` → `STOPPED`) envía cada trama por WebSocket cuando hay conectividad y, ante pérdida de red o fallo de envío, la almacena en `TelemetryQueue` (`expo-sqlite`).
+- Al detectar reconexión de red o socket, vacía la cola en lotes de 20 tramas (`dequeue(20)`) confirmando únicamente los IDs transmitidos (`acknowledge`), mientras el backend deduplica cualquier duplicado vía `frameId`.
+- **`AdaptivePolicy`** ajusta dinámicamente el intervalo de muestreo GPS según estado de movimiento y umbral de batería baja del dispositivo.
+
+### Editor geoespacial, cascada de enrutamiento y optimización 2-opt
+
+Para evitar rutas frágiles acopladas a un solo proveedor externo, `RoutesService.getDirections` implementa una cascada de tres niveles:
+
+1. **OpenRouteService** (`cycling-regular` GeoJSON con radio de ajuste de `150 m` y `continue_straight`).
+2. **OSRM público** en perfil `bike` si ORS falla o no hay API key configurada.
+3. **Fallback en línea recta** entre POIs, manteniendo el flujo operativo en todo momento.
+
+En el frontend, `RouteBuilderMap.tsx` mantiene dos geometrías simultáneas —`visualPolyline` (vista previa punteada inmediata) y `navigationPolyline` (trazo vial consolidado)— aplicando un *debounce* de `500 ms` con `AbortController` al arrastrar marcadores. Además, el backend incluye un optimizador de secuencia **Nearest Neighbor + búsqueda local 2-opt** sobre matriz de distancias Haversine (`route-optimizer.ts`, $O(n^2)$ para $\le 50$ POIs) y un módulo de diagnóstico por segmento (`route-diagnostics.ts`) que clasifica la relación distancia vial / geodésica.
+
+---
+
+## 4. Módulos funcionales y galería del producto
+
+### Explorador turístico interactivo (`/explore`)
+
+Permite a visitantes filtrar rutas por dificultad y distancia, consultar paradas ordenadas con categorías y navegar visualmente el trazado vial sobre el mapa de León.
+
+![Explorador turístico Explora León con filtros de dificultad y distancia, detalle de ruta y mapa Leaflet con marcadores de puntos de interés](/images/projects/etours-leon/explore-map.webp "Explora León (/explore): filtrado interactivo de rutas, listado de POIs ordenados y polilínea ciclista sobre OpenStreetMap.")
+
+### Constructor visual de rutas y gestor de POIs (`/routes`)
+
+Integra en un mismo flujo el modo colocación/arrastre de POIs (`POI Mode`), el secuenciado interactivo (`Route Mode`), la recalculación automática de distancia/duración vía OSRM/ORS y el reordenamiento transaccional de paradas.
+
+![Constructor interactivo de rutas RouteBuilderMap mostrando trazo vial OSRM, marcadores de inicio y fin, y gestor lateral de puntos de interés](/images/projects/etours-leon/route-builder.webp "RouteBuilderMap (/routes): trazado vial resuelto con OSRM, marcadores de inicio/fin, modo POI/Ruta y reordenamiento de paradas.")
+
+![Catálogo de gestión de rutas turísticas con códigos de negocio, indicadores de visibilidad, conteo de POIs y exportación](/images/projects/etours-leon/routes-pois.webp "Gestión de Rutas (/routes): catálogo administrativo con visibilidad pública, dificultad, conteo de POIs y exportación a Excel y PDF.")
+
+### Gestión de flota y pipeline de medios en nube (`/bikes`)
+
+Consolida el inventario de bicicletas eléctricas con imágenes procesadas en el backend (`sharp`) y servidas desde Supabase Storage bajo un esquema `imageKey`-first, barras visuales de batería, estado operativo/mantenimiento, estación asignada y exportación en `.xlsx` y PDF.
+
+![Tabla operativa Fleet Management con fotografías reales de bicicletas eléctricas desde Supabase Storage, estado disponible o mantenimiento y nivel de batería](/images/projects/etours-leon/fleet-management.webp "Fleet Management (/bikes): inventario de flota con miniaturas en Supabase Storage, semáforo de batería, estado operativo y filtros.")
+
+---
+
+## 5. Calidad, seguridad y evolución planificada
+
+- **Seguridad y control de acceso**: autenticación JWT (`passport-jwt` + `bcrypt`), almacenamiento seguro de tokens en móvil (`expo-secure-store`), protección de cabeceras con `helmet`, limitación de tasa con `@nestjs/throttler` y matriz RBAC (`RolePermission` + sobrescrituras `UserPermission`) sobre 8 módulos (`BIKES`, `USERS`, `STATIONS`, `RESERVATIONS`, `SETTINGS`, `TRACKING`, `PAYMENTS`, `ROUTES`) y 5 acciones (`PAGE`, `CREATE`, `READ`, `UPDATE`, `DELETE`).
+- **Cobertura de pruebas verificada en backend**: suites Jest de integración y recuperación sobre el subsistema crítico de telemetría (`tracking.dedup.integration.spec.ts`, `tracking.failure-recovery.spec.ts`, `tracking.redis.integration.spec.ts`, `tracking.session-lock.integration.spec.ts`) junto con pruebas de servicios del dominio.
+- **Límites actuales y hoja de ruta documentada**: la documentación de arquitectura del repositorio distingue explícitamente la plataforma implementada hoy de fases futuras como integración de pasarelas de pago externas en producción, candados IoT BLE/MQTT y series temporales dedicadas en TimescaleDB.

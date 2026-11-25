@@ -73,6 +73,7 @@ export default async function ProjectsPage({
     stackLabel: tFeatured("stackLabel"),
     readCaseStudy: tFeatured("readCaseStudy"),
     repository: tFeatured("repository"),
+    privateRepository: tFeatured("privateRepository"),
     demo: tFeatured("demo"),
     statusPublished: tFeatured("statusPublished"),
     statusInProgress: tFeatured("statusInProgress"),

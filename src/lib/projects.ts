@@ -110,6 +110,7 @@ export function getAllProjects(locale: AppLocale): ProjectMeta[] {
       status: entry.status,
       stack: entry.stack,
       repoUrl: entry.repoUrl,
+      repoVisibility: entry.repoVisibility,
       demoUrl: entry.demoUrl,
       coverImage: entry.coverImage,
       coverAlt: entry.coverAlt,
