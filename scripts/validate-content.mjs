@@ -98,6 +98,26 @@ function validateProjects() {
         errors.push(`Empty MDX body in content/projects/${locale}/${file}`);
       }
 
+      if (parsed.data.coverImage) {
+        const assetPath = path.join(ROOT, "public", parsed.data.coverImage.replace(/^\/+/, ""));
+        if (!fs.existsSync(assetPath)) {
+          errors.push(
+            `Missing coverImage asset for content/projects/${locale}/${file}: public/${parsed.data.coverImage.replace(/^\/+/, "")}`
+          );
+        }
+      }
+
+      const inlineImageMatches = content.matchAll(/!\[[^\]]*\]\((\/images\/[^)\s]+)(?:\s+"[^"]*")?\)/g);
+      for (const match of inlineImageMatches) {
+        const imageRel = match[1].replace(/^\/+/, "");
+        const assetPath = path.join(ROOT, "public", imageRel);
+        if (!fs.existsSync(assetPath)) {
+          errors.push(
+            `Missing inline MDX image asset in content/projects/${locale}/${file}: public/${imageRel}`
+          );
+        }
+      }
+
       localeMap.set(expectedSlug, parsed.data);
     }
 
@@ -122,7 +142,16 @@ function validateProjects() {
   }
 
   const sharedSlugs = esSlugs.filter((s) => enSlugs.includes(s));
-  const sharedFields = ["slug", "date", "featured", "order", "status", "repoUrl", "coverImage"];
+  const sharedFields = [
+    "slug",
+    "date",
+    "featured",
+    "order",
+    "status",
+    "repoUrl",
+    "repoVisibility",
+    "coverImage",
+  ];
 
   for (const slug of sharedSlugs) {
     const esMeta = projectsByLocale.es.get(slug);

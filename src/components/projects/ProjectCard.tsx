@@ -4,6 +4,7 @@ import {
   CheckCircle2,
   ExternalLink,
   FlaskConical,
+  Lock,
   Wrench,
 } from "lucide-react";
 import Image from "next/image";
@@ -19,6 +20,7 @@ export interface ProjectCardLabels {
   stackLabel: string;
   readCaseStudy: string;
   repository: string;
+  privateRepository: string;
   demo: string;
   statusPublished: string;
   statusInProgress: string;
@@ -233,16 +235,26 @@ export function ProjectCard({
               </Link>
             </Button>
 
-            <Button asChild variant="outline" size="sm">
-              <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+            {project.repoUrl && project.repoVisibility !== "private" ? (
+              <Button asChild variant="outline" size="sm">
+                <a
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span translate="no">{labels.repository}</span>
+                  <ExternalLink className="size-3.5" aria-hidden="true" />
+                </a>
+              </Button>
+            ) : (
+              <Badge
+                variant="outline"
+                className="inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 font-mono text-xs text-muted-foreground"
               >
-                <span translate="no">{labels.repository}</span>
-                <ExternalLink className="size-3.5" aria-hidden="true" />
-              </a>
-            </Button>
+                <Lock className="size-3.5" aria-hidden="true" />
+                <span>{labels.privateRepository}</span>
+              </Badge>
+            )}
 
             {project.demoUrl ? (
               <Button asChild variant="ghost" size="sm">

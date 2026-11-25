@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   ExternalLink,
   FlaskConical,
+  Lock,
   Wrench,
 } from "lucide-react";
 import Image from "next/image";
@@ -207,16 +208,26 @@ export default async function ProjectDetailPage({
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-1">
-              <Button asChild variant="default" size="lg">
-                <a
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {project.repoUrl && project.repoVisibility !== "private" ? (
+                <Button asChild variant="default" size="lg">
+                  <a
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>{tDetail("repositoryLink")}</span>
+                    <ExternalLink className="size-4" aria-hidden="true" />
+                  </a>
+                </Button>
+              ) : (
+                <Badge
+                  variant="outline"
+                  className="inline-flex h-10 items-center gap-2 rounded-lg px-3.5 font-mono text-xs text-muted-foreground"
                 >
-                  <span>{tDetail("repositoryLink")}</span>
-                  <ExternalLink className="size-4" aria-hidden="true" />
-                </a>
-              </Button>
+                  <Lock className="size-3.5" aria-hidden="true" />
+                  <span>{tDetail("privateRepository")}</span>
+                </Badge>
+              )}
 
               {project.demoUrl ? (
                 <Button asChild variant="outline" size="lg">
